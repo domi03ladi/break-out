@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\domi0\\unity-projects\\break-out-game\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|c:\\users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\fixedspeed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\fixedspeed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FixedSpeed.cs",
+              "DocumentMoniker": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\FixedSpeed.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\FixedSpeed.cs",
+              "ToolTip": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\FixedSpeed.cs",
+              "RelativeToolTip": "Assets\\Scripts\\FixedSpeed.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T22:25:22.269Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

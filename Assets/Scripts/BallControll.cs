@@ -1,27 +1,57 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class BallControl : MonoBehaviour
 {
-
     Rigidbody m_Rigidbody;
-    public float m_Thrust = 20f;
+
+    
+    [SerializeField] private float startDelay = 1.0f;
+    [SerializeField] private float launchMagnitude = 10f;
+    [SerializeField] private float minDirectionX = 0.5f;
+
+    private float fixedSpeed = 10f;
 
     void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
     }
 
-    private void Start()
+    void Start()
     {
-        m_Rigidbody.AddForce(Vector3.down); //inital push to the Ball (RB) so it starts moving without gravity
+        m_Rigidbody.isKinematic = true;
+        LaunchDelayed();
     }
 
     void FixedUpdate()
     {
-        Rigidbody rb = GetComponent<Rigidbody>();
-        float fixedSpeed = 10f;
-        rb.velocity = rb.velocity.normalized * fixedSpeed;
+        if (m_Rigidbody.isKinematic)
+        {
+            return;
+        }
+
+        if (m_Rigidbody.velocity.sqrMagnitude > 0.01f)
+        {
+            m_Rigidbody.velocity = m_Rigidbody.velocity.normalized * fixedSpeed;
+        }
+    }
+
+    // Method is used by GameManager to start the ball
+    public void LaunchDelayed()
+    {
+        StartCoroutine(DelayedLaunchRoutine());
+    }
+
+    private IEnumerator DelayedLaunchRoutine()
+    {
+        // Deleay
+        yield return new WaitForSeconds(startDelay);
+
+        // Release the ball and start
+        m_Rigidbody.isKinematic = false; // active physics
+        m_Rigidbody.velocity = Vector3.zero; // delete old speed
+
+        // Force to push the ball down
+        m_Rigidbody.AddForce(Vector3.down * launchMagnitude, ForceMode.VelocityChange);
     }
 }

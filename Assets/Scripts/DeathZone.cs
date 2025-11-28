@@ -21,15 +21,13 @@ public class DeathZone : MonoBehaviour
     {
         if (other.CompareTag("Ball"))
         {
-            // 1. Die zentrale Funktion im GameManager aufrufen
-            // Der GameManager muss das Singleton-Muster verwenden (GameManager.Instance)
+            // Function is used in GameManager
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.LoseLife();
             }
 
-            // 2. Den Ball deaktivieren oder zerstören, damit er neu gestartet werden kann
-            // Du kannst den Ball auch direkt zerstören, damit der GameManager einen neuen erstellt.
+            // destroy ball to create a new one
             Destroy(other.gameObject);
         }
     }

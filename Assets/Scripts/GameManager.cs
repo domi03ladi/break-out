@@ -18,9 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject livesUI;             
     [SerializeField] private GameObject gameOverUI;
 
-    // LEBENS-LOGIK
+    // Lives-Logic
     [Header("Lives UI")]
-    // Im Inspector die drei Planeten-Images zuweisen!
     [SerializeField] private Image[] lifeImages;
 
     [SerializeField] private Transform paddleTransform;
@@ -28,7 +27,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject ballPrefab;
     private Vector3 startPosition = new Vector3(0f, 2f, 0f);
 
-    // Die aktuelle Anzahl der Leben
     private int currentLives = 3;
 
 
@@ -66,15 +64,15 @@ public class GameManager : MonoBehaviour
 
             if (currentLives == 0)
             {
-                //Spiel beenden (Game Over)
+                //stop game (Game Over)
                 Debug.Log("Game Over! All lives lost");
                 SetState(GameState.GameOver);
             }
             else
             {
-                //Spiel zurücksetzen (Ball respawnen, Paddle zurücksetzen)
+                //reset game (Ball respawnen, Paddle reset)
                 Debug.Log("Leben verloren. Starte neue Runde.");
-                ResetBall(); // Implementiere diese Methode, um den Ball neu zu positionieren
+                ResetBall();
             }
         }
     }
@@ -91,16 +89,31 @@ public class GameManager : MonoBehaviour
 
     private void ResetBall()
     {
-        // Prüfen, ob noch Leben übrig sind (ist in LoseLife() schon passiert, aber zur Sicherheit)
         if (currentLives > 0)
         {
-            Debug.Log("Ball wird in der Mitte neu gestartet.");
-            GameObject newBall = Instantiate(ballPrefab, startPosition, Quaternion.identity);
-            paddleTransform.position = new Vector3(0f, paddleTransform.position.y, paddleTransform.position.z);
+            // reset paddle
+            if (paddleTransform != null)
+            {
+                paddleTransform.position = new Vector3(0f, paddleTransform.position.y, paddleTransform.position.z);
+            }
 
+            // instantiate new ball
+            GameObject newBallObject = Instantiate(ballPrefab, startPosition, Quaternion.identity);
+
+            BallControl ballControl = newBallObject.GetComponent<BallControl>();
+
+            if (ballControl != null)
+            {
+                // Delay on start (1 Second)
+                ballControl.LaunchDelayed();
+            }
+            else
+            {
+                Debug.LogError("Der neu erstellte Ball hat kein BallControl-Skript! Bitte das Ball-Prefab prüfen.");
+            }
         }
     }
-    
+
     public void SetState(GameState newState)
     {
         // Deactivate all containers by default

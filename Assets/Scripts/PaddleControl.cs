@@ -7,28 +7,22 @@ public class PaddleControl : MonoBehaviour
 
     [SerializeField] private float paddleSpeed = 30f;
 
-    // Spielfeldränder: Im Inspector auf die X-Positionen der Wände einstellen
+    // playing field boundaries
     [SerializeField] private float leftBoundary = -9.0f;
     [SerializeField] private float rightBoundary = 9.0f;
 
-    private float halfPaddleWidth;  // Halbe Breite des Paddles
-    private float minX;             // Endgültige linke Grenze für den Mittelpunkt des Paddles
-    private float maxX;             // Endgültige rechte Grenze für den Mittelpunkt des Paddles
+    private float halfPaddleWidth;
+    private float minX;             // left border
+    private float maxX;             // right border
 
 
     void Start()
     {
-        // 1. Die X-Skalierung gibt die volle Breite an. Wir benötigen die Hälfte davon.
+        // getting the center of the paddle
         halfPaddleWidth = transform.localScale.x / 2f;
 
-        // 2. Berechnung der endgültigen Mittelpunkt-Grenzen (nur einmal nötig!)
-        // minX: Linke Wand + halbe Breite (Mittelpunkt darf nicht über diesen Punkt hinaus)
         minX = leftBoundary + halfPaddleWidth;
-        // maxX: Rechte Wand - halbe Breite (Mittelpunkt darf nicht über diesen Punkt hinaus)
         maxX = rightBoundary - halfPaddleWidth;
-
-        // Optional: Hilfreich zur Fehlersuche.
-        // Debug.Log("Begrenzungen gesetzt: minX=" + minX + ", maxX=" + maxX);
     }
 
 
@@ -39,11 +33,10 @@ public class PaddleControl : MonoBehaviour
 
         float horizontal = Input.GetAxis("Horizontal");
 
-        // Neue Position berechnen
+        // calculate new position
         Vector3 newPosition = transform.position;
         newPosition.x += horizontal * paddleSpeed * Time.deltaTime;
 
-        // X begrenzen (Hier verwenden wir die einmal berechneten minX/maxX Werte)
         newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
 
         transform.position = newPosition;

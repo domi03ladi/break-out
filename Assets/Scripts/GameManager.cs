@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform paddleTransform;
 
     [SerializeField] private GameObject ballPrefab;
-    private Vector3 startPosition = new Vector3(0f, 2f, 0f);
+    public Vector3 startPosition = new Vector3(0f, 1f, 0f);
 
     private int currentLives = 3;
 
@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Der neu erstellte Ball hat kein BallControl-Skript! Bitte das Ball-Prefab prüfen.");
+                Debug.LogError("Der neu erstellte Ball hat kein BallControl-Skript! Bitte das Ball-Prefab prï¿½fen.");
             }
         }
     }

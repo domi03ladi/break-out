@@ -4,10 +4,19 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum GameState { Playing, GameOver }
+
 public class GameManager : MonoBehaviour
 {
 
     public static GameManager Instance;
+
+
+
+    [Header("Game State Containers")]
+    [SerializeField] private GameObject playingContainer;
+    [SerializeField] private GameObject livesUI;             
+    [SerializeField] private GameObject gameOverUI;
 
     // LEBENS-LOGIK
     [Header("Lives UI")]
@@ -33,6 +42,7 @@ public class GameManager : MonoBehaviour
 
         // show all lives at the beginning
         UpdateLivesUI();
+        SetState(GameState.Playing);
     }
 
     // Start is called before the first frame update
@@ -58,7 +68,7 @@ public class GameManager : MonoBehaviour
             {
                 //Spiel beenden (Game Over)
                 Debug.Log("Game Over! All lives lost");
-                // SetState(GameState.GameOver);
+                SetState(GameState.GameOver);
             }
             else
             {
@@ -90,14 +100,33 @@ public class GameManager : MonoBehaviour
 
         }
     }
-
-    // Deine SetState Methode würde hier stehen:
-    /*
+    
     public void SetState(GameState newState)
     {
-        // ... Logik zum Ein/Ausblenden der Container ...
+        // Deactivate all containers by default
+        playingContainer.SetActive(false);
+        livesUI.SetActive(false);
+        gameOverUI.SetActive(false);
+
+        // stop game time when game over
+        Time.timeScale = (newState == GameState.Playing) ? 1f : 0f;
+
+        // active new State
+        switch (newState)
+        {
+            case GameState.Playing:
+                playingContainer.SetActive(true);
+                livesUI.SetActive(true);
+                break;
+
+            case GameState.GameOver:
+                playingContainer.SetActive(false);
+                livesUI.SetActive(false);
+                gameOverUI.SetActive(true);
+                break;
+        }
     }
-    */
+
 }
 
 

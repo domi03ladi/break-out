@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BallControl : MonoBehaviour
 {
-    // Kein Singleton mehr nötig, da der GameManager ihn direkt erstellt
 
     Rigidbody m_Rigidbody;
     public float m_Thrust = 20f;
@@ -12,10 +11,12 @@ public class BallControl : MonoBehaviour
     void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
-        m_Rigidbody.AddForce(Vector3.down); //inital push to the Ball (RB) so it starts moving without gravity
     }
 
-    // Wir können Update() löschen, da keine Input-Logik mehr benötigt wird
+    private void Start()
+    {
+        m_Rigidbody.AddForce(Vector3.down); //inital push to the Ball (RB) so it starts moving without gravity
+    }
 
     void FixedUpdate()
     {

@@ -46,7 +46,7 @@ public class BrickManager : MonoBehaviour
     {
 
     }
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionExit(Collision collision)
     {
 if (collision.gameObject.CompareTag("Ball"))
     {
@@ -59,8 +59,7 @@ if (collision.gameObject.CompareTag("Ball"))
 
         // 2. Destroy the GameObject (the brick) after a tiny delay.
         // This ensures the physics engine handles the collision resolution before the object vanishes.
-        float delayTime = 0.01f;
-        Destroy(gameObject, delayTime);
+        Destroy(gameObject);
         
         // 3. Immediately exit the function to prevent further code execution in this component.
         return; 

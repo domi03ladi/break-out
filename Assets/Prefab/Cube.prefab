@@ -120,3 +120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e24d717f43b8a24997d04a00ea1c97b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  equestionText: {fileID: 5901254446852976296, guid: cea44f3e1a9f8a8489631b945502e521, type: 3}
+  equestionSpanwChance: 0.1
+  maxEquestionValue: 100

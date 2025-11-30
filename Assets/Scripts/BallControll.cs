@@ -10,7 +10,7 @@ public class BallControl : MonoBehaviour
     [SerializeField] private float launchMagnitude = 10f;
     [SerializeField] private float minDirectionX = 0.5f;
 
-    private float fixedSpeed = 10f;
+    private float fixedSpeed = 8f;
 
     void Awake()
     {

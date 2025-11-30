@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum GameState { Playing, GameOver }
+public enum GameState { Playing, GameOver, MainMenu}
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject playingContainer;
     [SerializeField] private GameObject livesUI;             
     [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private GameObject mainMenuUi;
 
     // Lives-Logic
     [Header("Lives UI")]
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
 
         // show all lives at the beginning
         UpdateLivesUI();
-        SetState(GameState.Playing);
+        SetState(GameState.MainMenu);
     }
 
     // Start is called before the first frame update
@@ -114,12 +115,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void StartGame()
+    {
+        SetState(GameState.Playing);
+
+
+        // Resets lives to 3 (if you come from the Game Over screen)
+        currentLives = 3;
+        UpdateLivesUI();
+
+        // First check whether an old ball exists and destroy it (important when restarting).
+        GameObject oldBall = GameObject.FindGameObjectWithTag("Ball");
+        if (oldBall != null)
+        {
+            Destroy(oldBall);
+        }
+
+        ResetBall();
+    }
+
     public void SetState(GameState newState)
     {
         // Deactivate all containers by default
         playingContainer.SetActive(false);
         livesUI.SetActive(false);
         gameOverUI.SetActive(false);
+        mainMenuUi.SetActive(false);
 
         // stop game time when game over
         Time.timeScale = (newState == GameState.Playing) ? 1f : 0f;
@@ -133,10 +154,13 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.GameOver:
-                playingContainer.SetActive(false);
-                livesUI.SetActive(false);
                 gameOverUI.SetActive(true);
                 break;
+
+            case GameState.MainMenu:
+                mainMenuUi.SetActive(true);
+                break;
+
         }
     }
 

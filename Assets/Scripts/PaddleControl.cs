@@ -5,7 +5,7 @@ using UnityEngine;
 public class PaddleControl : MonoBehaviour
 {
 
-    [SerializeField] private float paddleSpeed = 30f;
+    [SerializeField] private float paddleSpeed = 35f;
 
     // playing field boundaries
     [SerializeField] private float leftBoundary = -9.0f;

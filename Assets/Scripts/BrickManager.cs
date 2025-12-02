@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using TMPro;
 
-enum EquestionSymbol
+public enum EquestionSymbol
 {
     addition,
     subtraction,
@@ -20,6 +20,8 @@ public class BrickManager : MonoBehaviour
     public GameObject equestionText;
 
     private GameObject equestionObject;
+    public float relativeTextSize = 0.5f;
+
 
     // I don't really like them being here 
     // putting this on a spawnder would make more sense 
@@ -40,30 +42,29 @@ public class BrickManager : MonoBehaviour
 
     }
 
-
-    // Update is called once per frame
-    void Update()
+    void OnDestroy()
     {
-
-    }
-    void OnCollisionExit(Collision collision)
-    {
-if (collision.gameObject.CompareTag("Ball"))
-    {
-        // 1. Resolve the text object destruction first.
         if (equestionObject != null)
         {
+            // Spawn answers when the brick is destroyed
+            GameObject spawner = GameObject.FindGameObjectWithTag("Spawner");
+            if (spawner != null)
+            {
+                spawner.GetComponent<BrickSpawner>().SpawnAnswers(gameObject);
+            }
             Destroy(equestionObject);
-            equestionObject = null; // Set reference to null immediately
+            equestionObject = null;
         }
-
-        // 2. Destroy the GameObject (the brick) after a tiny delay.
-        // This ensures the physics engine handles the collision resolution before the object vanishes.
-        Destroy(gameObject);
-        
-        // 3. Immediately exit the function to prevent further code execution in this component.
-        return; 
     }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ball"))
+        {
+            // This ensures the physics engine handles the collision resolution before the object vanishes.
+            Destroy(gameObject);
+            return;
+        }
 
     }
     void GenerateEquestion()
@@ -141,18 +142,15 @@ if (collision.gameObject.CompareTag("Ball"))
             Destroy(equestionObject);
             return;
         }
+        // Dynamic Sizing (based on screen space projection of the brick height)
+        float worldHeightInPixels = Camera.main.WorldToScreenPoint(transform.position + Vector3.up * size.y).y - screenPosition.y;
+        float dynamicFontSize = worldHeightInPixels * relativeTextSize;
 
         // Set UI Text Position
         equestionObject.GetComponent<RectTransform>().position = screenPosition;
-        // Optional: Move it up slightly in screen space (pixels)
-        //equestionObject.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, 20);
-
-        // Dynamic Sizing (based on screen space projection of the brick height)
-        float worldHeightInPixels = Camera.main.WorldToScreenPoint(transform.position + Vector3.up * size.y).y - screenPosition.y;
-        float dynamicFontSize = worldHeightInPixels * 0.4f;
 
         tmpComponent.fontSize = dynamicFontSize;
-        tmpComponent.rectTransform.sizeDelta = new Vector2(worldHeightInPixels * 2f, worldHeightInPixels);
+        tmpComponent.rectTransform.sizeDelta = new Vector2(worldHeightInPixels * 2.5f, worldHeightInPixels);
 
         // Set Content
         string sign = "";
@@ -169,5 +167,25 @@ if (collision.gameObject.CompareTag("Ball"))
 
         equestionObject.SetActive(true);
     }
+    public int CalculateEquestionValue()
+	{
+		if (equestionObject == null)
+		{
+            return -1; // No equation associated
+		}
+        switch (symbol)
+        {
+            case EquestionSymbol.addition:
+                return (int)(equestion.x + equestion.y);
+            case EquestionSymbol.subtraction:
+                return (int)(equestion.x - equestion.y);
+            case EquestionSymbol.multiplication:
+                return (int)(equestion.x * equestion.y);
+            case EquestionSymbol.division:
+                return (int)(equestion.x / equestion.y);
+            default:
+                return -1;
+        }
+	}
 
 }

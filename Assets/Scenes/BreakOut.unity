@@ -1672,6 +1672,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brick: {fileID: 5258832734029285346, guid: 7aaccb12df3285a4c924ffc3e6d197d2, type: 3}
+  answer: {fileID: 5258832734029285346, guid: 97c02b77beb2b9749ad1d9691e2fdf86, type: 3}
+  AnswersAmount: 3
   width: 15
   height: 3
   columnGap: 0.1

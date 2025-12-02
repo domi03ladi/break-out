@@ -19,6 +19,7 @@ public class DeathZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.name + " entered DeathZone");
         if (other.CompareTag("Ball"))
         {
             // Function is used in GameManager
@@ -28,6 +29,9 @@ public class DeathZone : MonoBehaviour
             }
 
             // destroy ball to create a new one
+            Destroy(other.gameObject);
+        }else if (other.CompareTag("Answers"))
+        {
             Destroy(other.gameObject);
         }
     }

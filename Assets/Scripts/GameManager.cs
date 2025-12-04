@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 //reset game (Ball respawnen, Paddle reset)
-                Debug.Log("Leben verloren. Starte neue Runde.");
+                Debug.Log("Start new round!");
                 ResetBall();
             }
         }

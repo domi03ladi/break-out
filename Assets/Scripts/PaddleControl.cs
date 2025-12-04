@@ -6,6 +6,11 @@ public class PaddleControl : MonoBehaviour
 {
 
     [SerializeField] private float paddleSpeed = 35f;
+    [SerializeField] private AudioClip hitSound;
+
+    private AudioSource audioSource;
+
+    private Rigidbody rb;
 
     // playing field boundaries
     [SerializeField] private float leftBoundary = -9.0f;
@@ -14,6 +19,19 @@ public class PaddleControl : MonoBehaviour
     private float halfPaddleWidth;
     private float minX;             // left border
     private float maxX;             // right border
+
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody>(); // Rigidbody holen
+
+        // SICHERHEIT: Das Rigidbody muss Kinematisch sein (wird vom Code gesteuert)
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+        }
+    }
 
 
     void Start()
@@ -25,22 +43,24 @@ public class PaddleControl : MonoBehaviour
         maxX = rightBoundary - halfPaddleWidth;
     }
 
-
-    void Update()
+    void FixedUpdate()
     {
         if (Time.timeScale == 0f)
             return;
 
         float horizontal = Input.GetAxis("Horizontal");
 
-        // calculate new position
-        Vector3 newPosition = transform.position;
-        newPosition.x += horizontal * paddleSpeed * Time.deltaTime;
+        Vector3 targetPosition = transform.position;
+        targetPosition.x += horizontal * paddleSpeed * Time.fixedDeltaTime;
 
-        newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
+        targetPosition.x = Mathf.Clamp(targetPosition.x, minX, maxX);
 
-        transform.position = newPosition;
+        if (rb != null)
+        {
+            rb.MovePosition(targetPosition);
+        }
     }
+
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -48,6 +68,12 @@ public class PaddleControl : MonoBehaviour
 
         if (ballRb != null)
         {
+
+            if (audioSource != null && hitSound != null)
+            {
+                audioSource.PlayOneShot(hitSound);
+            }
+
             // Get the exact point where the ball hits the paddle
             Vector3 hitpoint = collision.contacts[0].point;
             float hitfactor = (hitpoint.x - transform.position.x) / transform.localScale.x;

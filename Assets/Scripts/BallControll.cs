@@ -44,14 +44,25 @@ public class BallControl : MonoBehaviour
 
     private IEnumerator DelayedLaunchRoutine()
     {
-        // Deleay
+        // Warte für die definierte Zeit
         yield return new WaitForSeconds(startDelay);
 
-        // Release the ball and start
-        m_Rigidbody.isKinematic = false; // active physics
-        m_Rigidbody.velocity = Vector3.zero; // delete old speed
+        m_Rigidbody.isKinematic = false;
+        m_Rigidbody.velocity = Vector3.zero;
 
-        // Force to push the ball down
-        m_Rigidbody.AddForce(Vector3.down * launchMagnitude, ForceMode.VelocityChange);
+        // NEU: Zufällige diagonale Startrichtung berechnen
+        // 1. Seitliche Richtung: Zufällig nach links oder rechts (nutzt minDirectionX)
+        float x = Random.Range(minDirectionX, 1f) * (Random.value < 0.5f ? -1f : 1f);
+
+        // 2. Vertikale Richtung: Nach oben (positive Y), da der Ball unten startet.
+        // Wenn du den Ball von der Mitte nach unten starten lassen willst, verwende Vector3.down, 
+        // aber dann musst du die Blöcke darunter anordnen. Hier verwenden wir Vector3.up (y=1).
+        float y = 1f;
+
+        Vector3 initialDirection = new Vector3(x, y, 0f).normalized;
+
+        // Wende Kraft an
+        // Wir verwenden jetzt launchMagnitude als Gesamtkraft, nicht nur für Y.
+        m_Rigidbody.AddForce(initialDirection * launchMagnitude, ForceMode.VelocityChange);
     }
 }

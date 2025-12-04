@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum GameState { Playing, GameOver, MainMenu}
+public enum GameState { Playing, GameOver, MainMenu, SelectLevel, CreateLevel}
 
 public class GameManager : MonoBehaviour
 {
@@ -18,9 +18,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject livesUI;             
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject mainMenuUi;
+    [SerializeField] private GameObject selectLevelUi;
+    [SerializeField] private GameObject createLevelUi;
 
-    // Lives-Logic
-    [Header("Lives UI")]
+    [Header("Sounds")]
+    [SerializeField] private AudioClip btnClickSound;
+    [SerializeField] private AudioClip loseLifeSound;
+
+
     [SerializeField] private Image[] lifeImages;
 
     [SerializeField] private Transform paddleTransform;
@@ -28,16 +33,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject ballPrefab;
     public Vector3 startPosition = new Vector3(0f, 1f, 0f);
 
-    private int currentLives = 3;
+    private AudioSource audioSource;
 
+
+    private int currentLives = 3;
+        
 
     void Awake()
     {
         // Singleton-Pattern
-        if (Instance == null)
+        if (Instance == null)   
             Instance = this;
         else
             Destroy(gameObject);
+
+        audioSource = GetComponent<AudioSource>();
 
         // show all lives at the beginning
         UpdateLivesUI();
@@ -58,7 +68,13 @@ public class GameManager : MonoBehaviour
 
     public void LoseLife()
     {
-        if(currentLives > 0)
+
+        if (audioSource != null && loseLifeSound != null)
+        {
+            audioSource.PlayOneShot(loseLifeSound);
+        }
+
+        if (currentLives > 0)
         {
             currentLives--;
             UpdateLivesUI();
@@ -117,8 +133,13 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        SetState(GameState.Playing);
 
+        if (audioSource != null && btnClickSound != null)
+        {
+            audioSource.PlayOneShot(btnClickSound);
+        }
+
+        SetState(GameState.Playing);
 
         // Resets lives to 3 (if you come from the Game Over screen)
         currentLives = 3;
@@ -134,6 +155,15 @@ public class GameManager : MonoBehaviour
         ResetBall();
     }
 
+    public void OpenLevelSelect()
+    {
+        if (audioSource != null && btnClickSound != null)
+        {
+            audioSource.PlayOneShot(btnClickSound);
+        }
+        SetState(GameState.SelectLevel);
+    }
+
     public void SetState(GameState newState)
     {
         // Deactivate all containers by default
@@ -141,6 +171,8 @@ public class GameManager : MonoBehaviour
         livesUI.SetActive(false);
         gameOverUI.SetActive(false);
         mainMenuUi.SetActive(false);
+        selectLevelUi.SetActive(false);
+        createLevelUi.SetActive(false);
 
         // stop game time when game over
         Time.timeScale = (newState == GameState.Playing) ? 1f : 0f;
@@ -159,6 +191,14 @@ public class GameManager : MonoBehaviour
 
             case GameState.MainMenu:
                 mainMenuUi.SetActive(true);
+                break;
+
+            case GameState.SelectLevel:
+                selectLevelUi.SetActive(true);
+                break;
+
+            case GameState.CreateLevel:
+                createLevelUi.SetActive(true);
                 break;
 
         }

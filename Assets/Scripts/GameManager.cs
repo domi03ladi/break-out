@@ -81,13 +81,11 @@ public class GameManager : MonoBehaviour
 
             if (currentLives == 0)
             {
-                //stop game (Game Over)
                 Debug.Log("Game Over! All lives lost");
                 SetState(GameState.GameOver);
             }
             else
             {
-                //reset game (Ball respawnen, Paddle reset)
                 Debug.Log("Start new round!");
                 ResetBall();
             }
@@ -134,10 +132,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
 
-        if (audioSource != null && btnClickSound != null)
-        {
-            audioSource.PlayOneShot(btnClickSound);
-        }
+        playClickSound();
 
         SetState(GameState.Playing);
 
@@ -157,11 +152,54 @@ public class GameManager : MonoBehaviour
 
     public void OpenLevelSelect()
     {
+        playClickSound();
+        SetState(GameState.SelectLevel);
+    }
+
+    private void SetLevelParameters(int maxRange, List<EquestionSymbol> allowedSymbols)
+    {
+        BrickManager.CurrentMaxEquestionValue = maxRange;
+        BrickManager.AllowedSymbols = allowedSymbols;
+
+        StartGame();
+    }
+
+
+    public void SelectLevel1()
+    {
+        playClickSound();
+        SetLevelParameters(20, new List<EquestionSymbol> { EquestionSymbol.addition });
+    }
+
+    public void SelectLevel2()
+    {
+        playClickSound();
+        SetLevelParameters(20, new List<EquestionSymbol> { EquestionSymbol.subtraction });
+    }
+
+    public void SelectLevel3()
+    {
+        playClickSound();
+        SetLevelParameters(10, new List<EquestionSymbol> { EquestionSymbol.multiplication });
+    }
+
+
+    public void SelectLevel4()
+    {
+        playClickSound();
+        SetLevelParameters(100, new List<EquestionSymbol> {
+        EquestionSymbol.addition,
+        EquestionSymbol.subtraction,
+        EquestionSymbol.multiplication
+    });
+    }
+
+    private void playClickSound()
+    {
         if (audioSource != null && btnClickSound != null)
         {
             audioSource.PlayOneShot(btnClickSound);
         }
-        SetState(GameState.SelectLevel);
     }
 
     public void SetState(GameState newState)

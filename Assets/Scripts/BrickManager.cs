@@ -9,7 +9,6 @@ public enum EquestionSymbol
     addition,
     subtraction,
     multiplication,
-    division
 }
 
 
@@ -26,8 +25,8 @@ public class BrickManager : MonoBehaviour
     // I don't really like them being here 
     // putting this on a spawnder would make more sense 
     public float equestionSpanwChance = 0.1f;
-    public int maxEquestionValue = 100;
-
+    public static int CurrentMaxEquestionValue = 10;
+    public static List<EquestionSymbol> AllowedSymbols = new List<EquestionSymbol> { EquestionSymbol.addition }; // Standard: Nur Addition
 
     // Start is called before the first frame update
     void Start()
@@ -69,40 +68,40 @@ public class BrickManager : MonoBehaviour
     }
     void GenerateEquestion()
     {
+
+        if (AllowedSymbols.Count == 0)
+        {
+            return;
+        }
+
         // Decide on a symbol
-        int symbolIndex = UnityEngine.Random.Range(0, 4);
-        symbol = (EquestionSymbol)symbolIndex;
+        int symbolIndexInList = UnityEngine.Random.Range(0, AllowedSymbols.Count);
+        symbol = AllowedSymbols[symbolIndexInList];
 
         int firstValue = 0;
         int secondValue = 0;
 
+        int currentMax = CurrentMaxEquestionValue;
+
         switch (symbol)
         {
             case EquestionSymbol.addition:
-                firstValue = UnityEngine.Random.Range(0, maxEquestionValue);
-                secondValue = UnityEngine.Random.Range(0, maxEquestionValue - firstValue);
+                firstValue = UnityEngine.Random.Range(1, currentMax);
+                secondValue = UnityEngine.Random.Range(1, currentMax - firstValue);
                 break;
             case EquestionSymbol.subtraction:
-                firstValue = UnityEngine.Random.Range(0, maxEquestionValue);
-                secondValue = UnityEngine.Random.Range(0, firstValue);
+                firstValue = UnityEngine.Random.Range(1, currentMax);
+                secondValue = UnityEngine.Random.Range(1, firstValue);
                 break;
             case EquestionSymbol.multiplication:
-                firstValue = UnityEngine.Random.Range(1, (int)Mathf.Sqrt(maxEquestionValue));
-                secondValue = UnityEngine.Random.Range(1, (int)Mathf.Sqrt(maxEquestionValue));
-                break;
-            case EquestionSymbol.division:
-                secondValue = UnityEngine.Random.Range(1, (int)Mathf.Sqrt(maxEquestionValue));
-                int tempQuotient = UnityEngine.Random.Range(1, (int)Mathf.Sqrt(maxEquestionValue));
-                firstValue = secondValue * tempQuotient;
+                firstValue = UnityEngine.Random.Range(1, (int)Mathf.Sqrt(currentMax));
+                secondValue = UnityEngine.Random.Range(1, (int)Mathf.Sqrt(currentMax));
                 break;
         }
 
         equestion = new Vector2(firstValue, secondValue);
     }
-    /// <summary>
-    /// Creates the text component, sizes it dynamically, sets the content, and positions it.
-    /// This is only called when the brick is selected to display an equation.
-    /// </summary>
+
     void PrepareAndDisplayEquestion()
     {
         Renderer renderer = GetComponent<Renderer>();
@@ -159,7 +158,6 @@ public class BrickManager : MonoBehaviour
             case EquestionSymbol.addition: sign = "+"; break;
             case EquestionSymbol.subtraction: sign = "-"; break;
             case EquestionSymbol.multiplication: sign = "×"; break;
-            case EquestionSymbol.division: sign = "÷"; break;
         }
 
         string equationString = $"{equestion.x} {sign} {equestion.y}";
@@ -181,8 +179,6 @@ public class BrickManager : MonoBehaviour
                 return (int)(equestion.x - equestion.y);
             case EquestionSymbol.multiplication:
                 return (int)(equestion.x * equestion.y);
-            case EquestionSymbol.division:
-                return (int)(equestion.x / equestion.y);
             default:
                 return -1;
         }

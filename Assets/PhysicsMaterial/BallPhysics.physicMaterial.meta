@@ -1,5 +1,8 @@
 fileFormatVersion: 2
 guid: 3d270e35fed049748984b0448325c55d
+labels:
+- Advanced
+- Atlas
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 13400000

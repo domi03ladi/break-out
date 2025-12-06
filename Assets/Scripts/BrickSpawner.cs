@@ -17,6 +17,8 @@ public class BrickSpawner : MonoBehaviour
     public float columnGap = 0.1f;
     public float rowGap = 0.1f;
 
+    public float[] answerVerticalOffsets = { 0.1f, 0.5f, 1f };
+
     private Vector3 highestPoint;
     // Start is called before the first frame update
     void Start()
@@ -89,7 +91,7 @@ public class BrickSpawner : MonoBehaviour
         float brickWidth = answer.GetComponent<Renderer>().bounds.size.x;
 
         // 1. Calculate the total number of available slots (object + space)
-        float spacing = 0.5f; // Adjust this value for minimum space between objects
+        float spacing = 2f; // Adjust this value for minimum space between objects
         float totalSlotWidth = brickWidth + spacing;
         int maxSlots = Mathf.FloorToInt(width / totalSlotWidth);
 
@@ -128,7 +130,26 @@ public class BrickSpawner : MonoBehaviour
         for (int i = 0; i < answersToSpawn; i++)
         {
             float xPosition = possibleXPositions[i];
-            GameObject answerObject = Instantiate(answer, new Vector3(xPosition,transform.position.y, transform.position.z), transform.rotation);
+
+            float currentOffset = 0f;
+
+            if (i < answerVerticalOffsets.Length)
+            {
+                // Nutze den definierten Offset aus dem Array
+                currentOffset = answerVerticalOffsets[i];
+            }
+            else
+            {
+                // Fällt auf 0 zurück, falls mehr als 3 Antworten gespawnt werden (Sicherheitsfall)
+                Debug.LogWarning("More answers to spawn than offsets defined! Using 0 offset.");
+            }
+
+            float spawnY = transform.position.y - currentOffset;
+
+            GameObject answerObject = Instantiate(answer, 
+                new Vector3(xPosition, spawnY, transform.position.z), 
+                transform.rotation);
+
             answerObject.transform.parent = transform;
             answerObject.GetComponent<AnswersManager>().answer = i;
             if (!hasAnsweredBeenset && i == answersToSpawn - 1)

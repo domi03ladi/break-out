@@ -5,12 +5,14 @@ public class BallControl : MonoBehaviour
 {
     Rigidbody m_Rigidbody;
 
-    
     [SerializeField] private float startDelay = 1.0f;
     [SerializeField] private float launchMagnitude = 10f;
     [SerializeField] private float minDirectionX = 0.5f;
 
     private float fixedSpeed = 8f;
+
+    private Vector3 savedVelocity; // To store direction and speed
+    private bool isFrozen = false; // To track state
 
     void Awake()
     {
@@ -25,18 +27,39 @@ public class BallControl : MonoBehaviour
 
     void FixedUpdate()
     {
+        // If kinematic (frozen or waiting to start), do not calculate speed
         if (m_Rigidbody.isKinematic)
         {
             return;
         }
 
+        // Enforce constant speed
         if (m_Rigidbody.velocity.sqrMagnitude > 0.01f)
         {
             m_Rigidbody.velocity = m_Rigidbody.velocity.normalized * fixedSpeed;
         }
     }
 
-    // Method is used by GameManager to start the ball
+    [ContextMenu("Toggle Freeze")]
+    public void ToggleFreeze()
+    {
+        if (isFrozen)
+        {
+            // Unfreeze: Restore Physics and Velocity
+            m_Rigidbody.isKinematic = false;
+            m_Rigidbody.velocity = savedVelocity; 
+            isFrozen = false;
+        }
+        else
+        {
+            // Freeze: Save Velocity and Stop Physics
+            savedVelocity = m_Rigidbody.velocity; 
+            m_Rigidbody.isKinematic = true;
+            m_Rigidbody.velocity = Vector3.zero; // Visually stop immediately
+            isFrozen = true;
+        }
+    }
+
     public void LaunchDelayed()
     {
         StartCoroutine(DelayedLaunchRoutine());
@@ -44,14 +67,12 @@ public class BallControl : MonoBehaviour
 
     private IEnumerator DelayedLaunchRoutine()
     {
-        // Warte für die definierte Zeit
         yield return new WaitForSeconds(startDelay);
 
         m_Rigidbody.isKinematic = false;
         m_Rigidbody.velocity = Vector3.zero;
 
         float x = 0f;
-
         float y = -1f;
 
         Vector3 initialDirection = new Vector3(x, y, 0f).normalized;

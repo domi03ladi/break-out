@@ -92,4 +92,38 @@ public class AnswersManager : MonoBehaviour
             equestionObject = null;
         }
 	}
+	void OnTriggerEnter(Collider other)
+	{
+        // Check if the collding object is a paddle
+        if (other.CompareTag("Paddle"))
+        {
+            // Notify GameManager about the answer selection
+            GameManager gameManager = FindFirstObjectByType<GameManager>();
+            if (gameManager != null)
+			{
+				if(isCorrectAnswer)
+                {
+                    gameManager.UpdateScore(1);
+                }
+			}
+            // Find all the answers bricks in scene by tag "Answers" and destroy them
+            GameObject[] answerBricks = GameObject.FindGameObjectsWithTag("Answers");
+            foreach (GameObject brick in answerBricks)
+            {
+                Destroy(brick);
+            }
+            // Freeze the ball by finding the ballControl script and calling ToggleFreeze
+            // Find the ball object by tag "Ball"
+            GameObject ballObject = GameObject.FindGameObjectWithTag("Ball");
+            if (ballObject != null)
+            {
+                BallControl ballControl = ballObject.GetComponent<BallControl>();
+                if (ballControl != null)
+                {
+                    ballControl.ToggleFreeze();
+                }
+            }
+        }
+		
+	}
 }

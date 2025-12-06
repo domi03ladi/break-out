@@ -148,10 +148,20 @@ public class BrickSpawner : MonoBehaviour
 				{
                     // set possible wrong answer within range of equation value 
                     // For now just random range
+                    // TODO: Improve wrong answer generation logic
                     answerObject.GetComponent<AnswersManager>().answer = Random.Range(0, equationValue + Random.Range(-11, 20));
 				}
 			}
         }
-
+        // Freeze the ball to let the player see the answers 
+        GameObject ball = GameObject.FindGameObjectWithTag("Ball");
+        if (ball != null)
+        {
+            BallControl ballControl = ball.GetComponent<BallControl>();
+            if (ballControl != null)
+            {
+                ballControl.ToggleFreeze();
+            }
+        }
     }
 }

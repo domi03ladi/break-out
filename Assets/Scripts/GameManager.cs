@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public enum GameState { Playing, GameOver, MainMenu, SelectLevel, CreateLevel}
 
@@ -32,11 +33,14 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject ballPrefab;
     public Vector3 startPosition = new Vector3(0f, 1f, 0f);
+    [SerializeField] public TextMeshProUGUI scoreText;
+    [SerializeField] public TextMeshProUGUI highScoreText;
 
     private AudioSource audioSource;
 
 
     private int currentLives = 3;
+    private int score = 0;
         
 
     void Awake()
@@ -131,10 +135,13 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-
         playClickSound();
 
         SetState(GameState.Playing);
+
+        score = 0;
+        UpdateScoreUI();
+        UpdateHighScoreUI();
 
         // Resets lives to 3 (if you come from the Game Over screen)
         currentLives = 3;
@@ -241,6 +248,36 @@ public class GameManager : MonoBehaviour
 
         }
     }
+    public void UpdateScore(int points = 1)
+	{
+        score += points;
+        // Update the ui;
+        UpdateScoreUI();
+        if (score > PlayerPrefs.GetInt("HighScore", 0))
+		{
+            PlayerPrefs.SetInt("HighScore", score);
+            UpdateHighScoreUI();
+		}
+
+
+	}
+    private void UpdateScoreUI()
+	{
+		// Find the score TextMeshProUGUI by tag Score and update its text
+        if (scoreText != null)
+        {
+            scoreText.text = "Score: " + score.ToString();
+        }
+
+	}
+    private void UpdateHighScoreUI()
+	{
+        if (highScoreText != null)
+        {
+            highScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore", 0).ToString();
+        }
+	}
+
 
 }
 

@@ -21,12 +21,23 @@ public class BrickManager : MonoBehaviour
     private GameObject equestionObject;
     public float relativeTextSize = 0.5f;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip destroyBrickSound;
+
+    private AudioSource audioSource;
+
 
     // I don't really like them being here 
     // putting this on a spawnder would make more sense 
     public float equestionSpanwChance = 0.1f;
     public static int CurrentMaxEquestionValue = 10;
     public static List<EquestionSymbol> AllowedSymbols = new List<EquestionSymbol> { EquestionSymbol.addition }; // Standard: Nur Addition
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -60,8 +71,14 @@ public class BrickManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
+
+            if (audioSource != null && destroyBrickSound != null)
+            {
+                audioSource.PlayOneShot(destroyBrickSound);
+            }
+
             // This ensures the physics engine handles the collision resolution before the object vanishes.
-            Destroy(gameObject);
+            Destroy(gameObject, 0.3f);
             return;
         }
 

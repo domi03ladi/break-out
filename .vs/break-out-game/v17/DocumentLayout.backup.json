@@ -3,11 +3,11 @@
   "WorkspaceRootPath": "C:\\Users\\domi0\\unity-projects\\break-out-game\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|C:\\Users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\brickspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|c:\\users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\brickspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\brickspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|c:\\users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\brickmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|C:\\Users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\brickmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\brickmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -60,7 +60,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\BrickManager.cs",
               "ToolTip": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\BrickManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\BrickManager.cs",
-              "ViewState": "AgIAADEAAAAAAAAAAAAuwD4AAAArAAAAAAAAAA==",
+              "ViewState": "AgIAAJsAAAAAAAAAAAAswLsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-05T07:54:12.008Z",
               "EditorCaption": ""
@@ -73,7 +73,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\BrickSpawner.cs",
               "ToolTip": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\BrickSpawner.cs",
               "RelativeToolTip": "Assets\\Scripts\\BrickSpawner.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAQwFsAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAABWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-04T17:28:45.424Z",
               "EditorCaption": ""

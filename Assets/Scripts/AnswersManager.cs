@@ -7,15 +7,20 @@ public class AnswersManager : MonoBehaviour
 {
     public int answer;
     public bool isCorrectAnswer = false;
-    // Start is called before the first frame update
     public GameObject equestionText;
+
+    // NEU: Damit kannst du die Position im Inspector verschieben
+    // X = Horizontal, Y = Vertikal
+    // Ein negativer Y-Wert schiebt den Text nach unten.
+    public Vector2 screenOffset = new Vector2(0, -10f);
 
     private GameObject equestionObject;
     public float relativeTextSize = 0.5f;
 
     void Start()
     {
-        Renderer renderer = GetComponent<Renderer>();
+        // WICHTIG: GetComponentInChildren verwenden für importierte Modelle
+        Renderer renderer = GetComponentInChildren<Renderer>();
         if (renderer == null) return;
 
         // Find the Canvas Transform
@@ -29,7 +34,6 @@ public class AnswersManager : MonoBehaviour
 
         if (tmpComponent == null)
         {
-            // Fallback for complex prefab structure
             tmpComponent = equestionObject.GetComponentInChildren<TextMeshProUGUI>(true);
             if (tmpComponent == null)
             {
@@ -38,13 +42,11 @@ public class AnswersManager : MonoBehaviour
             }
         }
 
-        // Calculate World Position of the brick's front face (-Z)
-        Vector3 size = renderer.bounds.size;
-        Vector3 brickFrontWorldPosition = transform.position;
-        brickFrontWorldPosition.z -= (size.z / 2f);
+        // Wir nutzen die visuelle Mitte des Objekts (bounds.center) statt transform.position
+        Vector3 targetWorldPosition = renderer.bounds.center;
 
         // Project World Point to Screen/Canvas Point
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(brickFrontWorldPosition);
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(targetWorldPosition);
 
         // Check if brick is in front of the camera
         if (screenPosition.z < 0)
@@ -52,68 +54,77 @@ public class AnswersManager : MonoBehaviour
             Destroy(equestionObject);
             return;
         }
-        // Dynamic Sizing (based on screen space projection of the brick height)
-        float worldHeightInPixels = Camera.main.WorldToScreenPoint(transform.position + Vector3.up * size.y).y - screenPosition.y;
-        float dynamicFontSize = worldHeightInPixels * relativeTextSize;
+
+        // NEU: Offset anwenden
+        screenPosition.x += screenOffset.x;
+        screenPosition.y += screenOffset.y;
 
         // Set UI Text Position
-        equestionObject.GetComponent<RectTransform>().position = screenPosition;
+        RectTransform rt = equestionObject.GetComponent<RectTransform>();
+        rt.position = screenPosition;
 
-        tmpComponent.fontSize = dynamicFontSize;
-        tmpComponent.rectTransform.sizeDelta = new Vector2(worldHeightInPixels * 2.5f, worldHeightInPixels);
+        // Feste Textgröße, RectTransform-Größe und Farbe
+        tmpComponent.fontSize = 35;
+        tmpComponent.rectTransform.sizeDelta = new Vector2(120, 60);
+        tmpComponent.color = Color.white;
 
+        // Text auf die Antwort setzen
         tmpComponent.text = answer.ToString();
-        
     }
+
 
     // Update is called once per frame
     void Update()
     {
         // Move the text along with the brick
         if (equestionObject != null)
-		{
-            Renderer renderer = GetComponent<Renderer>();
+        {
+            Renderer renderer = GetComponentInChildren<Renderer>();
             if (renderer == null) return;
 
+            // Wir nutzen auch hier bounds.center für konsistente Positionierung
+            Vector3 targetWorldPosition = renderer.bounds.center;
+
             // Project World Point to Screen/Canvas Point
-            Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(targetWorldPosition);
+
+            // NEU: Offset auch im Update anwenden, damit es nicht springt
+            screenPosition.x += screenOffset.x;
+            screenPosition.y += screenOffset.y;
 
             // Update UI Text Position
             equestionObject.GetComponent<RectTransform>().position = screenPosition;
         }
-
-        
     }
-	void OnDestroy()
-	{
-		if (equestionObject != null)
+
+    void OnDestroy()
+    {
+        if (equestionObject != null)
         {
             Destroy(equestionObject);
             equestionObject = null;
         }
-	}
-	void OnTriggerEnter(Collider other)
-	{
-        // Check if the collding object is a paddle
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
         if (other.CompareTag("Paddle"))
         {
-            // Notify GameManager about the answer selection
             GameManager gameManager = FindFirstObjectByType<GameManager>();
             if (gameManager != null)
-			{
-				if(isCorrectAnswer)
+            {
+                if (isCorrectAnswer)
                 {
                     gameManager.UpdateScore(1);
                 }
-			}
-            // Find all the answers bricks in scene by tag "Answers" and destroy them
+            }
+
             GameObject[] answerBricks = GameObject.FindGameObjectsWithTag("Answers");
             foreach (GameObject brick in answerBricks)
             {
                 Destroy(brick);
             }
-            // Freeze the ball by finding the ballControl script and calling ToggleFreeze
-            // Find the ball object by tag "Ball"
+
             GameObject ballObject = GameObject.FindGameObjectWithTag("Ball");
             if (ballObject != null)
             {
@@ -124,6 +135,5 @@ public class AnswersManager : MonoBehaviour
                 }
             }
         }
-		
-	}
+    }
 }

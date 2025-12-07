@@ -2016,7 +2016,7 @@ GameObject:
   - component: {fileID: 694975473}
   m_Layer: 0
   m_Name: BorderLeft
-  m_TagString: Untagged
+  m_TagString: Border
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2763,7 +2763,7 @@ GameObject:
   - component: {fileID: 776509099}
   m_Layer: 0
   m_Name: BorderTop
-  m_TagString: Untagged
+  m_TagString: Border
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4307,7 +4307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brick: {fileID: 5258832734029285346, guid: 7aaccb12df3285a4c924ffc3e6d197d2, type: 3}
-  answer: {fileID: 5258832734029285346, guid: 97c02b77beb2b9749ad1d9691e2fdf86, type: 3}
+  answer: {fileID: 1569032338197383480, guid: fe413503076320245871163035b6ce47, type: 3}
   AnswersAmount: 3
   width: 15
   height: 2.4
@@ -4701,7 +4701,7 @@ GameObject:
   - component: {fileID: 1684691810}
   m_Layer: 0
   m_Name: BorderRight
-  m_TagString: Untagged
+  m_TagString: Border
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

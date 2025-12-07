@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -2852122977741899445}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Cube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equestionText: {fileID: 5901254446852976296, guid: cea44f3e1a9f8a8489631b945502e521, type: 3}
   relativeTextSize: 0.55
-  destroyBrickSound: {fileID: 8300000, guid: 3ae0167d0789023458ff0a3354f2f378, type: 3}
+  destroyBrickSound: {fileID: 8300000, guid: 2c17282c254a2e7478bc91d72d58fd08, type: 3}
   equestionSpanwChance: 0.1
 --- !u!82 &-2852122977741899445
 AudioSource:

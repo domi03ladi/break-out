@@ -9,6 +9,8 @@ TagManager:
   - Answers
   - Spawner
   - Paddle
+  - Cube
+  - Border
   layers:
   - Default
   - TransparentFX

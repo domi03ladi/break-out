@@ -7,7 +7,13 @@ public class BallControl : MonoBehaviour
 
     [SerializeField] private float startDelay = 1.0f;
     [SerializeField] private float launchMagnitude = 10f;
-    [SerializeField] private float minDirectionX = 0.5f;
+
+    [Header("Sounds")]
+    [SerializeField] private AudioClip destroyBrickSound;
+    [SerializeField] private AudioClip hitWallSound;
+
+    private AudioSource audioSource;
+
 
     private float fixedSpeed = 8f;
 
@@ -17,6 +23,7 @@ public class BallControl : MonoBehaviour
     void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -57,6 +64,29 @@ public class BallControl : MonoBehaviour
             m_Rigidbody.isKinematic = true;
             m_Rigidbody.velocity = Vector3.zero; // Visually stop immediately
             isFrozen = true;
+        }
+    }
+
+    // Füge dies zu BallControl hinzu:
+    void OnCollisionEnter(Collision collision)
+    {
+        // Die 'Collision'-Variable enthält Informationen über das getroffene Objekt.
+        GameObject hitObject = collision.gameObject;
+
+        // Überprüfe, ob das getroffene Objekt ein Block ist (oder ein anderes relevantes Tag hat).
+        if (hitObject.CompareTag("Cube"))
+        {
+            if (audioSource != null && destroyBrickSound != null)
+            {
+                audioSource.PlayOneShot(destroyBrickSound);
+            }
+
+        } else if (hitObject.CompareTag("Border"))
+        {
+            if (audioSource != null && hitWallSound != null)
+            {
+                audioSource.PlayOneShot(hitWallSound);
+            }
         }
     }
 

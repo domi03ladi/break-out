@@ -50,6 +50,7 @@ public class BrickManager : MonoBehaviour
             if (spawner != null)
             {
                 spawner.GetComponent<BrickSpawner>().SpawnAnswers(gameObject);
+                GameObject.FindGameObjectWithTag("Paddle").GetComponentInChildren<Animator>().SetTrigger("Open");
             }
             Destroy(equestionObject);
             equestionObject = null;
@@ -60,9 +61,13 @@ public class BrickManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
-
+            Animator animator = gameObject.GetComponentInChildren<Animator>();
+            if (animator != null)
+            {
+                animator.Play("Destroy", 0, 0f);
+            }
             // This ensures the physics engine handles the collision resolution before the object vanishes.
-            Destroy(gameObject);
+            Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
             return;
         }
 

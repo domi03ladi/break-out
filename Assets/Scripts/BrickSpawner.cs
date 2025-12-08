@@ -11,6 +11,7 @@ public class BrickSpawner : MonoBehaviour
 {
     public GameObject brick;
     public GameObject answer;
+    public List<GameObject> bricks;
     public int AnswersAmount = 3;
     public float width;
     public float height;
@@ -23,6 +24,15 @@ public class BrickSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        bricks = new List<GameObject>
+        {
+            GameObject.Find("Earth_Brick2"),
+            GameObject.Find("Neptune_Brick"),
+            GameObject.Find("Venus_Brick"),
+            GameObject.Find("Moon_Brick"),
+            GameObject.Find("Jupiter_Brick"),
+            GameObject.Find("Mars_Brick")
+        };
         // Assuming transform.position is the desired bottom-left corner of the grid area.
         highestPoint = new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
         spawn();
@@ -43,8 +53,13 @@ public class BrickSpawner : MonoBehaviour
         {
             for (float y = highestPoint.y; y > maxY; y -= brickHeight + rowGap)
             {
+                GameObject selectedBrick = GetRandomBrick();
+                if (selectedBrick != null)
+                {
+                    Instantiate(selectedBrick, new Vector3(x + brickWidth / 2, y - brickHeight / 2, transform.position.z), transform.rotation, transform);
+                }
                 // Make them a child of the spawner for better hierarchy organization
-                Instantiate(brick, new Vector3(x + brickWidth / 2, y - brickHeight / 2, transform.position.z), transform.rotation).transform.parent = transform;
+                //Instantiate(brick, new Vector3(x + brickWidth / 2, y - brickHeight / 2, transform.position.z), transform.rotation).transform.parent = transform;
             }
         }
 
@@ -184,5 +199,16 @@ public class BrickSpawner : MonoBehaviour
                 ballControl.ToggleFreeze();
             }
         }
+    }
+    GameObject GetRandomBrick()
+    {
+        if (bricks == null || bricks.Count == 0)
+        {
+            Debug.LogError("No bricks assigned!");
+            return null;
+        }
+
+        int index = Random.Range(0, bricks.Count);
+        return bricks[index];
     }
 }

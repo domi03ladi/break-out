@@ -124,6 +124,7 @@ public class AnswersManager : MonoBehaviour
             {
                 Destroy(brick);
             }
+            GameObject.FindGameObjectWithTag("Paddle").GetComponentInChildren<Animator>().SetTrigger("Close");
 
             GameObject ballObject = GameObject.FindGameObjectWithTag("Ball");
             if (ballObject != null)

@@ -5101,7 +5101,10 @@ MonoBehaviour:
   startDelay: 1
   launchMagnitude: 10
   destroyBrickSound: {fileID: 8300000, guid: 2c17282c254a2e7478bc91d72d58fd08, type: 3}
-  hitWallSound: {fileID: 8300000, guid: 2867b196cacd8aa4394ee3f0b1e2c088, type: 3}
+  hitWallSound: {fileID: 8300000, guid: f81213188364f0f40bd24000312c870d, type: 3}
+  ballRenderer: {fileID: 8290579533419231837}
+  fireMaterial: {fileID: 2100000, guid: 7cf697448e198a243bed08b011caa6ea, type: 2}
+  frozenMaterial: {fileID: 2100000, guid: 6b4efbc8d2fb10c4ca04660b7507729f, type: 2}
 --- !u!82 &6290916276605300877
 AudioSource:
   m_ObjectHideFlags: 0

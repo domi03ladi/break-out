@@ -12,6 +12,11 @@ public class BallControl : MonoBehaviour
     [SerializeField] private AudioClip destroyBrickSound;
     [SerializeField] private AudioClip hitWallSound;
 
+    [Header("Visual Effects")]
+    [SerializeField] private Renderer ballRenderer; // Der Renderer auf dem Ball-Objekt
+    [SerializeField] private Material fireMaterial; // Dein 'Fire_Ball' Material Asset
+    [SerializeField] private Material frozenMaterial; // Dein 'Frozen_Ball' Material Asset
+
     private AudioSource audioSource;
 
 
@@ -30,6 +35,7 @@ public class BallControl : MonoBehaviour
     {
         m_Rigidbody.isKinematic = true;
         LaunchDelayed();
+        SetBallVisual(fireMaterial);
     }
 
     void FixedUpdate()
@@ -56,6 +62,7 @@ public class BallControl : MonoBehaviour
             m_Rigidbody.isKinematic = false;
             m_Rigidbody.velocity = savedVelocity; 
             isFrozen = false;
+            SetBallVisual(fireMaterial);
         }
         else
         {
@@ -64,6 +71,7 @@ public class BallControl : MonoBehaviour
             m_Rigidbody.isKinematic = true;
             m_Rigidbody.velocity = Vector3.zero; // Visually stop immediately
             isFrozen = true;
+            SetBallVisual(frozenMaterial);
         }
     }
 
@@ -87,6 +95,15 @@ public class BallControl : MonoBehaviour
             {
                 audioSource.PlayOneShot(hitWallSound);
             }
+        }
+    }
+
+
+    private void SetBallVisual(Material material)
+    {
+        if (ballRenderer != null && material != null)
+        {
+            ballRenderer.material = material;
         }
     }
 

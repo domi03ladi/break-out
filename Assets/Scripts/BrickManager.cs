@@ -23,10 +23,6 @@ public class BrickManager : MonoBehaviour
 
     private CameraShake cameraShake;
 
-
-    // I don't really like them being here 
-    // putting this on a spawnder would make more sense 
-    public float equestionSpanwChance = 0.1f;
     public static int CurrentMaxEquestionValue = 10;
     public static List<EquestionSymbol> AllowedSymbols = new List<EquestionSymbol> { EquestionSymbol.addition }; // Standard: Nur Addition
 
@@ -34,16 +30,8 @@ public class BrickManager : MonoBehaviour
     void Start()
     {
 
-        float randomValue = UnityEngine.Random.Range(0f, 1f);
-        if (randomValue <= equestionSpanwChance)
-        {
-            GenerateEquestion();
-            PrepareAndDisplayEquestion();
-        }
-
         if (cameraShake == null)
         {
-            // Versuche, die Komponente auf der Hauptkamera zu finden
             cameraShake = Camera.main.GetComponent<CameraShake>();
         }
 
@@ -83,7 +71,7 @@ public class BrickManager : MonoBehaviour
         }
 
     }
-    void GenerateEquestion()
+    public void GenerateEquestion()
     {
 
         if (AllowedSymbols.Count == 0)
@@ -119,7 +107,7 @@ public class BrickManager : MonoBehaviour
         equestion = new Vector2(firstValue, secondValue);
     }
 
-    void PrepareAndDisplayEquestion()
+    public void PrepareAndDisplayEquestion()
     {
         Renderer renderer = GetComponent<Renderer>();
         if (renderer == null) return;

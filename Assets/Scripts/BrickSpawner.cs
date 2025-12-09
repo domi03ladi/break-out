@@ -17,6 +17,9 @@ public class BrickSpawner : MonoBehaviour
     public float height;
     public float columnGap = 0.1f;
     public float rowGap = 0.1f;
+    public int targetEquestionsToSpawn = 5;
+    private List<int> questionBrickIndices = new List<int>();
+    private List<GameObject> spawnedBricksList = new List<GameObject>();
 
     public float[] answerVerticalOffsets = { 0.1f, 0.5f, 1f };
 
@@ -42,12 +45,22 @@ public class BrickSpawner : MonoBehaviour
     [ContextMenu("Spawn Bricks")]
     void spawn()
     {
+        spawnedBricksList.Clear();
+        questionBrickIndices.Clear();
+
         float maxX = highestPoint.x + width;
-        float maxY = transform.position.y; // Bottom edge Y
+        float maxY = transform.position.y;
 
         float brickWidth = brick.GetComponent<Renderer>().bounds.size.x;
         float brickHeight = brick.GetComponent<Renderer>().bounds.size.y;
 
+        int columns = Mathf.FloorToInt((width + columnGap) / (brickWidth + columnGap));
+        int rows = Mathf.FloorToInt((height + rowGap) / (brickHeight + rowGap));
+        int totalBricks = columns * rows;
+
+        PrepareQuestionIndices(totalBricks);
+
+        int currentBrickIndex = 0;
 
         for (float x = highestPoint.x; x < maxX; x += brickWidth + columnGap)
         {
@@ -56,14 +69,27 @@ public class BrickSpawner : MonoBehaviour
                 GameObject selectedBrick = GetRandomBrick();
                 if (selectedBrick != null)
                 {
-                    Instantiate(selectedBrick, new Vector3(x + brickWidth / 2, y - brickHeight / 2, transform.position.z), transform.rotation, transform);
+                    GameObject newBrick = Instantiate(selectedBrick, new Vector3(x + brickWidth / 2, y - brickHeight / 2, transform.position.z), transform.rotation, transform);
+
+                    if (questionBrickIndices.Contains(currentBrickIndex))
+                    {
+                        BrickManager manager = newBrick.GetComponent<BrickManager>();
+                        if (manager != null)
+                        {
+                            manager.GenerateEquestion();
+                            manager.PrepareAndDisplayEquestion();
+                        }
+                    }
+
+                    spawnedBricksList.Add(newBrick);
+                    currentBrickIndex++;
                 }
-                // Make them a child of the spawner for better hierarchy organization
-                //Instantiate(brick, new Vector3(x + brickWidth / 2, y - brickHeight / 2, transform.position.z), transform.rotation).transform.parent = transform;
             }
         }
-
     }
+
+
+
     [ContextMenu("Despawn Bricks")]
     void despawn()
     {
@@ -211,4 +237,29 @@ public class BrickSpawner : MonoBehaviour
         int index = Random.Range(0, bricks.Count);
         return bricks[index];
     }
+
+    private void PrepareQuestionIndices(int totalBricks)
+    {
+        int actualTarget = Mathf.Min(targetEquestionsToSpawn, totalBricks);
+
+        List<int> allIndices = new List<int>();
+        for (int i = 0; i < totalBricks; i++)
+        {
+            allIndices.Add(i);
+        }
+
+        System.Random rng = new System.Random();
+        int n = allIndices.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            int value = allIndices[k];
+            allIndices[k] = allIndices[n];
+            allIndices[n] = value;
+        }
+
+        questionBrickIndices = allIndices.GetRange(0, actualTarget);
+    }
+
 }

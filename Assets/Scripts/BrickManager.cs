@@ -21,6 +21,8 @@ public class BrickManager : MonoBehaviour
     private GameObject equestionObject;
     public float relativeTextSize = 0.5f;
 
+    private CameraShake cameraShake;
+
 
     // I don't really like them being here 
     // putting this on a spawnder would make more sense 
@@ -37,6 +39,12 @@ public class BrickManager : MonoBehaviour
         {
             GenerateEquestion();
             PrepareAndDisplayEquestion();
+        }
+
+        if (cameraShake == null)
+        {
+            // Versuche, die Komponente auf der Hauptkamera zu finden
+            cameraShake = Camera.main.GetComponent<CameraShake>();
         }
 
     }
@@ -61,13 +69,16 @@ public class BrickManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
-            Animator animator = gameObject.GetComponentInChildren<Animator>();
-            if (animator != null)
-            {
-                animator.Play("Destroy", 0, 0f);
-            }
+            cameraShake.TriggerShake();
+
+            // Animator animator = gameObject.GetComponentInChildren<Animator>();
+            //if (animator != null)
+            //{
+              //  animator.Play("Destroy", 0, 0f);
+            //}
             // This ensures the physics engine handles the collision resolution before the object vanishes.
-            Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
+            //Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
+            Destroy(gameObject);
             return;
         }
 

@@ -3,7 +3,11 @@
   "WorkspaceRootPath": "C:\\Users\\domi0\\unity-projects\\break-out-game\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|C:\\Users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\brickmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|C:\\Users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\ballcontroll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\ballcontroll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|c:\\users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\brickmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\brickmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -11,15 +15,11 @@
       "RelativeMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|C:\\Users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\ballcontroll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\ballcontroll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|C:\\Users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\answersmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\answersmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|c:\\users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\brickspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|C:\\Users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\brickspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\brickspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -38,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
@@ -50,18 +50,17 @@
               "RelativeToolTip": "Assets\\Scripts\\AnswersManager.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAAACUAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-05T07:57:54.826Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-05T07:57:54.826Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "BrickManager.cs",
               "DocumentMoniker": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\BrickManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\BrickManager.cs",
               "ToolTip": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\BrickManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\BrickManager.cs",
-              "ViewState": "AgIAAKwAAAAAAAAAAAAswL8AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAKwAAAAAAAAAAAAswL8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-05T07:54:12.008Z",
               "EditorCaption": ""
@@ -76,18 +75,17 @@
               "RelativeToolTip": "Assets\\Scripts\\BrickSpawner.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-04T17:28:45.424Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-04T17:28:45.424Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "BallControll.cs",
               "DocumentMoniker": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\BallControll.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\BallControll.cs",
               "ToolTip": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\BallControll.cs",
               "RelativeToolTip": "Assets\\Scripts\\BallControll.cs",
-              "ViewState": "AgIAADIAAAAAAAAAAAAqwEUAAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-27T23:28:16.753Z",
               "EditorCaption": ""
@@ -106,7 +104,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "GameManager.cs",
               "DocumentMoniker": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\GameManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\GameManager.cs",
@@ -114,8 +112,7 @@
               "RelativeToolTip": "Assets\\Scripts\\GameManager.cs",
               "ViewState": "AgIAAFQAAAAAAAAAAAAewCYAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T18:45:03.189Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T18:45:03.189Z"
             },
             {
               "$type": "Document",

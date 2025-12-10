@@ -168,6 +168,9 @@ public class BrickSpawner : MonoBehaviour
         int equationValue = brick.GetComponent<BrickManager>().CalculateEquestionValue();
         bool hasAnsweredBeenset = false;
 
+        HashSet<int> usedNumbers = new HashSet<int>();
+        usedNumbers.Add(equationValue);
+
         // 4. Instantiate the answers using the first 'AnswersAmount' randomized positions
         for (int i = 0; i < answersToSpawn; i++)
         {
@@ -193,29 +196,24 @@ public class BrickSpawner : MonoBehaviour
                 transform.rotation);
 
             answerObject.transform.parent = transform;
-            answerObject.GetComponent<AnswersManager>().answer = i;
             answerObject.GetComponent<AnswersManager>().parent = this;
-            if (!hasAnsweredBeenset && i == answersToSpawn - 1)
+
+            int assignedNumber;
+            if (!hasAnsweredBeenset && (i == answersToSpawn - 1 || Random.Range(0, answersToSpawn - i) == 0))
             {
-                answerObject.GetComponent<AnswersManager>().answer = equationValue;
+                assignedNumber = equationValue;
+                answerObject.GetComponent<AnswersManager>().isCorrectAnswer = true;
                 hasAnsweredBeenset = true;
-            }else
-			{
-                // Get random chances to spawn correct answer in this position
-                int chance = Random.Range(0, answersToSpawn);
-                if (chance == 0 && !hasAnsweredBeenset)
+            }
+            else
+            {
+                do
                 {
-                    answerObject.GetComponent<AnswersManager>().answer = equationValue;
-                    answerObject.GetComponent<AnswersManager>().isCorrectAnswer = true;
-                    hasAnsweredBeenset = true;
-                }else
-				{
-                    // set possible wrong answer within range of equation value 
-                    // For now just random range
-                    // TODO: Improve wrong answer generation logic
-                    answerObject.GetComponent<AnswersManager>().answer = Random.Range(0, equationValue + Random.Range(-11, 20));
-				}
-			}
+                    assignedNumber = Random.Range(Mathf.Max(0, equationValue - 10), equationValue + 20);
+                } while (usedNumbers.Contains(assignedNumber));
+            }
+            answerObject.GetComponent<AnswersManager>().answer = assignedNumber;
+            usedNumbers.Add(assignedNumber);
             spawnedAnswers.Add(answerObject);
         }
         // Freeze the ball to let the player see the answers 

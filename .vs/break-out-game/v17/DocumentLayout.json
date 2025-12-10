@@ -3,15 +3,19 @@
   "WorkspaceRootPath": "C:\\Users\\domi0\\unity-projects\\break-out-game\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|C:\\Users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\brickmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|c:\\users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\brickmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\brickmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|c:\\users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\explosioneffect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\explosioneffect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|C:\\Users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\brickspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\brickspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|c:\\users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\camerashake.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|C:\\Users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\camerashake.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\camerashake.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -42,11 +46,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "ExplosionEffect.cs",
+              "DocumentMoniker": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\ExplosionEffect.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ExplosionEffect.cs",
+              "ToolTip": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\ExplosionEffect.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ExplosionEffect.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-09T23:45:22.089Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "CameraShake.cs",
               "DocumentMoniker": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\CameraShake.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CameraShake.cs",
@@ -54,12 +71,11 @@
               "RelativeToolTip": "Assets\\Scripts\\CameraShake.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-09T18:09:58.539Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-09T18:09:58.539Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "AnswersManager.cs",
               "DocumentMoniker": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\AnswersManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\AnswersManager.cs",
@@ -77,14 +93,14 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\BrickManager.cs",
               "ToolTip": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\BrickManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\BrickManager.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACwAAAAAAAAAAAAgwEUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-05T07:54:12.008Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "BrickSpawner.cs",
               "DocumentMoniker": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\BrickSpawner.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\BrickSpawner.cs",
@@ -92,12 +108,11 @@
               "RelativeToolTip": "Assets\\Scripts\\BrickSpawner.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-04T17:28:45.424Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-04T17:28:45.424Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "BallControll.cs",
               "DocumentMoniker": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\BallControll.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\BallControll.cs",
@@ -109,7 +124,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "DeathZone.cs",
               "DocumentMoniker": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\DeathZone.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\DeathZone.cs",
@@ -121,7 +136,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "GameManager.cs",
               "DocumentMoniker": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\GameManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\GameManager.cs",
@@ -133,7 +148,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "PaddleControl.cs",
               "DocumentMoniker": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\PaddleControl.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PaddleControl.cs",

@@ -23,6 +23,8 @@ public class BrickManager : MonoBehaviour
 
     private CameraShake cameraShake;
 
+    private ExplosionEffect explosionEffect;
+
     public static int CurrentMaxEquestionValue = 10;
     public static List<EquestionSymbol> AllowedSymbols = new List<EquestionSymbol> { EquestionSymbol.addition }; // Standard: Nur Addition
 
@@ -34,6 +36,8 @@ public class BrickManager : MonoBehaviour
         {
             cameraShake = Camera.main.GetComponent<CameraShake>();
         }
+
+        explosionEffect = GetComponent<ExplosionEffect>();
 
     }
 
@@ -59,10 +63,15 @@ public class BrickManager : MonoBehaviour
         {
             cameraShake.TriggerShake();
 
+            if (explosionEffect != null)
+            {
+                explosionEffect.Explode();
+            }
+
             // Animator animator = gameObject.GetComponentInChildren<Animator>();
             //if (animator != null)
             //{
-              //  animator.Play("Destroy", 0, 0f);
+            //  animator.Play("Destroy", 0, 0f);
             //}
             // This ensures the physics engine handles the collision resolution before the object vanishes.
             //Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);

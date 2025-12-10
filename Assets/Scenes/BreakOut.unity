@@ -5027,6 +5027,7 @@ MonoBehaviour:
   height: 2.4
   columnGap: 0.1
   rowGap: 0.1
+  targetEquestionsToSpawn: 5
   answerVerticalOffsets:
   - 0.1
   - 0.4

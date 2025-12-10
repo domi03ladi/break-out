@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2348041174262273254}
   - component: {fileID: 9147698701361513872}
   - component: {fileID: 1816843649464274312}
+  - component: {fileID: -7072225145553702158}
   - component: {fileID: 309490118897789132}
   - component: {fileID: -2852122977741899445}
   m_Layer: 0
@@ -109,6 +110,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-7072225145553702158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5258832734029285346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f255cfffc5abe847942f3338719222e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 6372527036787284890, guid: e889f532673af9b4fb4993f4b0c0fea9, type: 3}
 --- !u!114 &309490118897789132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,8 +137,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equestionText: {fileID: 5901254446852976296, guid: cea44f3e1a9f8a8489631b945502e521, type: 3}
   relativeTextSize: 0.55
-  destroyBrickSound: {fileID: 8300000, guid: 2c17282c254a2e7478bc91d72d58fd08, type: 3}
-  equestionSpanwChance: 0.1
 --- !u!82 &-2852122977741899445
 AudioSource:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class AnswersManager : MonoBehaviour
     public int answer;
     public bool isCorrectAnswer = false;
     public GameObject equestionText;
+    public BrickSpawner parent;
 
     // NEU: Damit kannst du die Position im Inspector verschieben
     // X = Horizontal, Y = Vertikal
@@ -135,6 +136,10 @@ public class AnswersManager : MonoBehaviour
                     ballControl.ToggleFreeze();
                 }
             }
+        }
+        else if (other.CompareTag("DeathZone"))
+        {
+            parent.AnswerDestroyed(this.gameObject);
         }
     }
 }

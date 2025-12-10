@@ -11,6 +11,7 @@ TagManager:
   - Paddle
   - Cube
   - Border
+  - DeathZone
   layers:
   - Default
   - TransparentFX

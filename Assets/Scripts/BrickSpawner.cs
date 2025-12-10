@@ -20,6 +20,7 @@ public class BrickSpawner : MonoBehaviour
     public int targetEquestionsToSpawn = 5;
     private List<int> questionBrickIndices = new List<int>();
     private List<GameObject> spawnedBricksList = new List<GameObject>();
+    public List<GameObject> spawnedAnswers = new List<GameObject>();
 
     public float[] answerVerticalOffsets = { 0.1f, 0.5f, 1f };
 
@@ -193,6 +194,7 @@ public class BrickSpawner : MonoBehaviour
 
             answerObject.transform.parent = transform;
             answerObject.GetComponent<AnswersManager>().answer = i;
+            answerObject.GetComponent<AnswersManager>().parent = this;
             if (!hasAnsweredBeenset && i == answersToSpawn - 1)
             {
                 answerObject.GetComponent<AnswersManager>().answer = equationValue;
@@ -214,6 +216,7 @@ public class BrickSpawner : MonoBehaviour
                     answerObject.GetComponent<AnswersManager>().answer = Random.Range(0, equationValue + Random.Range(-11, 20));
 				}
 			}
+            spawnedAnswers.Add(answerObject);
         }
         // Freeze the ball to let the player see the answers 
         GameObject ball = GameObject.FindGameObjectWithTag("Ball");
@@ -225,6 +228,7 @@ public class BrickSpawner : MonoBehaviour
                 ballControl.ToggleFreeze();
             }
         }
+        
     }
     GameObject GetRandomBrick()
     {
@@ -260,6 +264,23 @@ public class BrickSpawner : MonoBehaviour
         }
 
         questionBrickIndices = allIndices.GetRange(0, actualTarget);
+    }
+
+    public void AnswerDestroyed(GameObject answer)
+    {
+        spawnedAnswers.Remove(answer);
+        if (spawnedAnswers.Count == 0)
+        {
+            GameObject ball = GameObject.FindGameObjectWithTag("Ball");
+            if (ball != null)
+            {
+                BallControl ballControl = ball.GetComponent<BallControl>();
+                if (ballControl != null)
+                {
+                    ballControl.ToggleFreeze();
+                }
+            }
+        }
     }
 
 }

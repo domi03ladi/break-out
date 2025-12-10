@@ -232,6 +232,7 @@ public class GameManager : MonoBehaviour
 
             case GameState.GameOver:
                 gameOverUI.SetActive(true);
+                //gameOverUI.GameOverScore.updateUi(score,PlayerPrefs.GetInt("HighScore", 0).ToString());
                 break;
 
             case GameState.MainMenu:

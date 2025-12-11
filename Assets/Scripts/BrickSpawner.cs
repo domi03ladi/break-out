@@ -43,6 +43,14 @@ public class BrickSpawner : MonoBehaviour
 
 
     }
+    void Update()
+    {
+        if(transform.childCount == 0)
+        {
+            spawn();
+        }
+        
+    }
     [ContextMenu("Spawn Bricks")]
     void spawn()
     {
@@ -185,7 +193,7 @@ public class BrickSpawner : MonoBehaviour
             }
             else
             {
-                // Fällt auf 0 zurück, falls mehr als 3 Antworten gespawnt werden (Sicherheitsfall)
+                // Fï¿½llt auf 0 zurï¿½ck, falls mehr als 3 Antworten gespawnt werden (Sicherheitsfall)
                 Debug.LogWarning("More answers to spawn than offsets defined! Using 0 offset.");
             }
 

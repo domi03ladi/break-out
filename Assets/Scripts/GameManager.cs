@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public enum GameState { Playing, GameOver, MainMenu, SelectLevel, CreateLevel}
+public enum GameState { Playing, GameOver, MainMenu, SelectLevel, CreateLevel, LeaderBoard}
 
 public class GameManager : MonoBehaviour
 {
@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject mainMenuUi;
     [SerializeField] private GameObject selectLevelUi;
     [SerializeField] private GameObject createLevelUi;
+    [SerializeField] private GameObject leaderBoardUI;
 
     [Header("Sounds")]
     [SerializeField] private AudioClip btnClickSound;
@@ -171,6 +172,12 @@ public class GameManager : MonoBehaviour
         StartGame();
     }
 
+    public void OpenLeaderBoard()
+    {
+        playClickSound();
+        SetState(GameState.LeaderBoard);
+    }
+
 
     public void SelectLevel1()
     {
@@ -218,6 +225,7 @@ public class GameManager : MonoBehaviour
         mainMenuUi.SetActive(false);
         selectLevelUi.SetActive(false);
         createLevelUi.SetActive(false);
+        leaderBoardUI.SetActive(false);
 
         // stop game time when game over
         Time.timeScale = (newState == GameState.Playing) ? 1f : 0f;
@@ -245,6 +253,9 @@ public class GameManager : MonoBehaviour
 
             case GameState.CreateLevel:
                 createLevelUi.SetActive(true);
+                break;
+            case GameState.LeaderBoard:
+                leaderBoardUI.SetActive(true);
                 break;
 
         }
@@ -278,6 +289,12 @@ public class GameManager : MonoBehaviour
             highScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore", 0).ToString();
         }
 	}
+
+    public void OpenMainMenu()
+    {
+        playClickSound();
+        SetState(GameState.MainMenu);
+    }
 
 
 }

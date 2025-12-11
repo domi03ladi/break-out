@@ -26,8 +26,15 @@ public class GameManager : MonoBehaviour
     [Header("Sounds")]
     [SerializeField] private AudioClip btnClickSound;
     [SerializeField] private AudioClip loseLifeSound;
+    [SerializeField] private AudioClip gameOverSound;
+    [SerializeField] private AudioClip backgroundMusic;
+    [SerializeField] private AudioClip mainMenuMusic;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource musicAudioSource;
 
 
+
+    [Header("Rest")]
     [SerializeField] private Image[] lifeImages;
 
     [SerializeField] private Transform paddleTransform;
@@ -37,7 +44,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI scoreText;
     [SerializeField] public TextMeshProUGUI highScoreText;
 
-    private AudioSource audioSource;
 
 
     private int currentLives = 3;
@@ -52,7 +58,6 @@ public class GameManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        audioSource = GetComponent<AudioSource>();
 
         // show all lives at the beginning
         UpdateLivesUI();
@@ -236,15 +241,24 @@ public class GameManager : MonoBehaviour
             case GameState.Playing:
                 playingContainer.SetActive(true);
                 livesUI.SetActive(true);
+                PlaySong(backgroundMusic);
                 break;
 
             case GameState.GameOver:
                 gameOverUI.SetActive(true);
+                gameOverUI.GetComponent<GameOverScore>().updateUi(score,PlayerPrefs.GetInt("HighScore", 0));
                 //gameOverUI.GameOverScore.updateUi(score,PlayerPrefs.GetInt("HighScore", 0).ToString());
+                if(audioSource != null)
+                {
+                    audioSource.PlayOneShot(gameOverSound);
+                }
+                // on game over we can start playing main meny theme again
+                PlaySong(mainMenuMusic);
                 break;
 
             case GameState.MainMenu:
                 mainMenuUi.SetActive(true);
+                PlaySong(mainMenuMusic);
                 break;
 
             case GameState.SelectLevel:
@@ -294,6 +308,20 @@ public class GameManager : MonoBehaviour
     {
         playClickSound();
         SetState(GameState.MainMenu);
+    }
+    public void PlaySong(AudioClip song)
+    {
+        if (musicAudioSource)
+        {
+            // 1. Stop the current audio immediately (clears the buffer)
+            musicAudioSource.Stop(); 
+
+            // 2. Assign the new song to the clip property
+            musicAudioSource.clip = song;
+
+            // 3. Play the new song from the beginning
+            musicAudioSource.Play();
+        }
     }
 
 

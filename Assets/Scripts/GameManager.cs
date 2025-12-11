@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip gameOverSound;
     [SerializeField] private AudioClip backgroundMusic;
     [SerializeField] private AudioClip mainMenuMusic;
+    [SerializeField] private AudioClip rightAnswerSound;
+    [SerializeField] private AudioClip wrongAnswerSound;
+
+    [Header("AudioSources")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource musicAudioSource;
 
@@ -241,6 +245,13 @@ public class GameManager : MonoBehaviour
             case GameState.Playing:
                 playingContainer.SetActive(true);
                 livesUI.SetActive(true);
+
+                // reduce volume
+                if (musicAudioSource != null)
+                {
+                    musicAudioSource.volume = 0.1f;
+                }
+
                 PlaySong(backgroundMusic);
                 break;
 
@@ -276,6 +287,7 @@ public class GameManager : MonoBehaviour
     }
     public void UpdateScore(int points = 1)
 	{
+        playRightAnswerSound();
         score += points;
         // Update the ui;
         UpdateScoreUI();
@@ -284,9 +296,26 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("HighScore", score);
             UpdateHighScoreUI();
 		}
-
-
 	}
+
+    public void playWrongAnswerSound()
+    {
+        if (audioSource != null)
+        {
+            audioSource.volume = 0.8f;
+        }
+        audioSource.PlayOneShot(wrongAnswerSound);
+    }
+
+    private void playRightAnswerSound()
+    {
+        if (audioSource != null)
+        {
+            audioSource.volume = 0.8f;
+        }
+        audioSource.PlayOneShot(rightAnswerSound);
+    }
+
     private void UpdateScoreUI()
 	{
 		// Find the score TextMeshProUGUI by tag Score and update its text

@@ -18,6 +18,10 @@ public class AnswersManager : MonoBehaviour
     private GameObject equestionObject;
     public float relativeTextSize = 0.5f;
 
+    void Awake()
+    {
+    }
+
     void Start()
     {
         // WICHTIG: GetComponentInChildren verwenden für importierte Modelle
@@ -117,6 +121,9 @@ public class AnswersManager : MonoBehaviour
                 if (isCorrectAnswer)
                 {
                     gameManager.UpdateScore(1);
+                } else
+                {
+                    gameManager.playWrongAnswerSound();
                 }
             }
 

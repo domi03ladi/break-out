@@ -28,7 +28,8 @@ public class BrickManager : MonoBehaviour
     public static int CurrentMaxEquestionValue = 10;
     public static List<EquestionSymbol> AllowedSymbols = new List<EquestionSymbol> { EquestionSymbol.addition }; // Standard: Nur Addition
 
-    // Start is called before the first frame update
+    public bool isBeingDestroyedBySystem = false;
+
     void Start()
     {
 
@@ -43,17 +44,25 @@ public class BrickManager : MonoBehaviour
 
     void OnDestroy()
     {
+        if (isBeingDestroyedBySystem)
+        {
+            HideEquestion();
+            return;
+        }
+
         if (equestionObject != null)
         {
-            // Spawn answers when the brick is destroyed
             GameObject spawner = GameObject.FindGameObjectWithTag("Spawner");
             if (spawner != null)
             {
                 spawner.GetComponent<BrickSpawner>().SpawnAnswers(gameObject);
-                GameObject.FindGameObjectWithTag("Paddle").GetComponentInChildren<Animator>().SetTrigger("Open");
+
+                var paddle = GameObject.FindGameObjectWithTag("Paddle");
+                if (paddle != null)
+                    paddle.GetComponentInChildren<Animator>().SetTrigger("Open");
             }
-            Destroy(equestionObject);
-            equestionObject = null;
+
+            HideEquestion();
         }
     }
 
@@ -67,18 +76,9 @@ public class BrickManager : MonoBehaviour
             {
                 explosionEffect.Explode();
             }
-
-            // Animator animator = gameObject.GetComponentInChildren<Animator>();
-            //if (animator != null)
-            //{
-            //  animator.Play("Destroy", 0, 0f);
-            //}
-            // This ensures the physics engine handles the collision resolution before the object vanishes.
-            //Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
             Destroy(gameObject);
             return;
         }
-
     }
     public void GenerateEquestion()
     {
@@ -179,6 +179,16 @@ public class BrickManager : MonoBehaviour
 
         equestionObject.SetActive(true);
     }
+
+    public void HideEquestion()
+    {
+        if (equestionObject != null)
+        {
+            Destroy(equestionObject);
+            equestionObject = null;
+        }
+    }
+
     public int CalculateEquestionValue()
 	{
 		if (equestionObject == null)

@@ -47,7 +47,6 @@ public class AnswersManager : MonoBehaviour
             }
         }
 
-        // Wir nutzen die visuelle Mitte des Objekts (bounds.center) statt transform.position
         Vector3 targetWorldPosition = renderer.bounds.center;
 
         // Project World Point to Screen/Canvas Point
@@ -60,20 +59,16 @@ public class AnswersManager : MonoBehaviour
             return;
         }
 
-        // NEU: Offset anwenden
         screenPosition.x += screenOffset.x;
         screenPosition.y += screenOffset.y;
 
-        // Set UI Text Position
         RectTransform rt = equestionObject.GetComponent<RectTransform>();
         rt.position = screenPosition;
 
-        // Feste Textgröße, RectTransform-Größe und Farbe
         tmpComponent.fontSize = 35;
         tmpComponent.rectTransform.sizeDelta = new Vector2(120, 60);
         tmpComponent.color = Color.white;
 
-        // Text auf die Antwort setzen
         tmpComponent.text = answer.ToString();
     }
 

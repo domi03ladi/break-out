@@ -28,6 +28,7 @@ public class BallControl : MonoBehaviour
 
 
     private float fixedSpeed = 8f;
+    private const float MIN_VERTICAL_SPEED = 1.0f;
 
     private Vector3 savedVelocity; // To store direction and speed
     private bool isFrozen = false; // To track state
@@ -47,16 +48,32 @@ public class BallControl : MonoBehaviour
 
     void FixedUpdate()
     {
-        // If kinematic (frozen or waiting to start), do not calculate speed
+        // Wenn kinematisch (eingefroren oder wartend), keine Geschwindigkeit berechnen
         if (m_Rigidbody.isKinematic)
         {
             return;
         }
 
-        // Enforce constant speed
-        if (m_Rigidbody.velocity.sqrMagnitude > 0.01f)
+        Vector3 currentVelocity = m_Rigidbody.velocity;
+
+        // Nur prüfen, wenn der Ball sich überhaupt bewegt
+        if (currentVelocity.sqrMagnitude > 0.01f)
         {
-            m_Rigidbody.velocity = m_Rigidbody.velocity.normalized * fixedSpeed;
+            // 1. Verhindern, dass der Ball horizontal stecken bleibt
+            // Wir prüfen, ob die Y-Geschwindigkeit (hoch/runter) zu klein ist
+            if (Mathf.Abs(currentVelocity.y) < MIN_VERTICAL_SPEED)
+            {
+                // Wir bestimmen das Vorzeichen (geht er gerade leicht hoch oder runter?)
+                // Wenn er exakt 0 ist (horizontal), schicken wir ihn nach unten (-1)
+                float sign = (currentVelocity.y == 0) ? -1f : Mathf.Sign(currentVelocity.y);
+
+                // Wir erzwingen die minimale Y-Geschwindigkeit
+                currentVelocity.y = sign * MIN_VERTICAL_SPEED;
+            }
+
+            // 2. Konstante Geschwindigkeit erzwingen
+            // Hier nutzen wir den korrigierten Vektor und normalisieren ihn wieder
+            m_Rigidbody.velocity = currentVelocity.normalized * fixedSpeed;
         }
     }
 
@@ -82,15 +99,12 @@ public class BallControl : MonoBehaviour
         }
     }
 
-    // Füge dies zu BallControl hinzu:
     void OnCollisionEnter(Collision collision)
     {
         StopAllCoroutines();
         StartCoroutine(ImpactSquash());
-        // Die 'Collision'-Variable enthält Informationen über das getroffene Objekt.
         GameObject hitObject = collision.gameObject;
 
-        // Überprüfe, ob das getroffene Objekt ein Block ist (oder ein anderes relevantes Tag hat).
         if (hitObject.CompareTag("Cube"))
         {
             if (audioSource != null && destroyBrickSound != null)

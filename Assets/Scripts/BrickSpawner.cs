@@ -100,17 +100,43 @@ public class BrickSpawner : MonoBehaviour
 
 
     [ContextMenu("Despawn Bricks")]
-    void despawn()
+    public void DespawnBricks()
     {
+        // 1. clear the lists
+        spawnedBricksList.Clear();
+        questionBrickIndices.Clear();
+
+        // destroy all objects
+        foreach (GameObject ans in spawnedAnswers)
+        {
+            if (ans != null) Destroy(ans);
+        }
+        spawnedAnswers.Clear();
+
+        GameObject[] looseAnswers = GameObject.FindGameObjectsWithTag("Answers");
+        foreach (GameObject a in looseAnswers)
+        {
+            Destroy(a);
+        }
+
         foreach (Transform child in transform)
         {
+            BrickManager bm = child.GetComponent<BrickManager>();
+
+            if (bm != null)
+            {
+                bm.isBeingDestroyedBySystem = true;
+            }
+
             Destroy(child.gameObject);
         }
     }
+
+
     [ContextMenu("Respawn Bricks")]
     void Respawn()
     {
-        despawn();
+        DespawnBricks();
         spawn();
     }
 

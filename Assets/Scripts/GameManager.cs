@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject selectLevelUi;
     [SerializeField] private GameObject createLevelUi;
     [SerializeField] private GameObject leaderBoardUI;
+    [SerializeField] private Transform paddleTransform;
+
 
     [Header("Sounds")]
     [SerializeField] private AudioClip btnClickSound;
@@ -36,12 +38,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource musicAudioSource;
 
-
-
-    [Header("Rest")]
+    [Header("Images")]
     [SerializeField] private Image[] lifeImages;
 
-    [SerializeField] private Transform paddleTransform;
+
+    [Header("References")]
+    [SerializeField] private BrickSpawner brickSpawner;
+
+
 
     [SerializeField] private GameObject ballPrefab;
     public Vector3 startPosition = new Vector3(0f, 1f, 0f);
@@ -148,15 +152,13 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         playClickSound();
-
-        SetState(GameState.Playing);
-
         score = 0;
         UpdateScoreUI();
         UpdateHighScoreUI();
 
         // Resets lives to 3 (if you come from the Game Over screen)
         currentLives = 3;
+        brickSpawner.DespawnBricks();
         UpdateLivesUI();
 
         // First check whether an old ball exists and destroy it (important when restarting).
@@ -165,8 +167,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(oldBall);
         }
-
         ResetBall();
+        SetState(GameState.Playing);
     }
 
     public void OpenLevelSelect()

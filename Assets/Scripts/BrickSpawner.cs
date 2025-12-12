@@ -67,7 +67,7 @@ public class BrickSpawner : MonoBehaviour
         int rows = Mathf.FloorToInt((height + rowGap) / (brickHeight + rowGap));
         int totalBricks = columns * rows;
 
-        PrepareQuestionIndices(totalBricks);
+        PrepareQuestionIndices(columns, rows);
 
         int currentBrickIndex = 0;
 
@@ -276,28 +276,34 @@ public class BrickSpawner : MonoBehaviour
         return bricks[index];
     }
 
-    private void PrepareQuestionIndices(int totalBricks)
+    private void PrepareQuestionIndices(int cols, int rows)
     {
-        int actualTarget = Mathf.Min(targetEquestionsToSpawn, totalBricks);
+        questionBrickIndices.Clear();
 
-        List<int> allIndices = new List<int>();
-        for (int i = 0; i < totalBricks; i++)
-        {
-            allIndices.Add(i);
-        }
+        // Hinweis: Dein Loop läuft erst Zeile für Zeile (Y) innerhalb einer Spalte (X).
+        // Index-Formel: (Spalte * AnzahlZeilen) + Zeile
 
-        System.Random rng = new System.Random();
-        int n = allIndices.Count;
-        while (n > 1)
-        {
-            n--;
-            int k = rng.Next(n + 1);
-            int value = allIndices[k];
-            allIndices[k] = allIndices[n];
-            allIndices[n] = value;
-        }
+        // 1. Linke Obere Ecke (Spalte 0, erste Zeile)
+        int topLeft = 0;
+        questionBrickIndices.Add(topLeft);
 
-        questionBrickIndices = allIndices.GetRange(0, actualTarget);
+        // 2. Linke Untere Ecke (Spalte 0, letzte Zeile)
+        int bottomLeft = rows - 1;
+        questionBrickIndices.Add(bottomLeft);
+
+        // 3. Rechte Obere Ecke (Letzte Spalte, erste Zeile)
+        int topRight = (cols - 1) * rows;
+        questionBrickIndices.Add(topRight);
+
+        // 4. Rechte Untere Ecke (Letzte Spalte, letzte Zeile)
+        int bottomRight = (cols - 1) * rows + (rows - 1);
+        questionBrickIndices.Add(bottomRight);
+
+        // 5. Mitte (Mittlere Spalte, Mittlere Zeile)
+        int midCol = cols / 2;
+        int midRow = rows / 2;
+        int center = (midCol * rows) + midRow;
+        questionBrickIndices.Add(center);
     }
 
     public void AnswerDestroyed(GameObject answer)

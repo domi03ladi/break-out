@@ -167,7 +167,7 @@ public class BrickSpawner : MonoBehaviour
         float brickWidth = answer.GetComponent<Renderer>().bounds.size.x;
 
         // 1. Calculate the total number of available slots (object + space)
-        float spacing = 2f; // Adjust this value for minimum space between objects
+        float spacing = 5f; // Adjust this value for minimum space between objects
         float totalSlotWidth = brickWidth + spacing;
         int maxSlots = Mathf.FloorToInt(width / totalSlotWidth);
 
@@ -250,6 +250,8 @@ public class BrickSpawner : MonoBehaviour
             usedNumbers.Add(assignedNumber);
             spawnedAnswers.Add(answerObject);
         }
+
+
         // Freeze the ball to let the player see the answers 
         GameObject ball = GameObject.FindGameObjectWithTag("Ball");
         if (ball != null)

@@ -10,9 +10,6 @@ public class AnswersManager : MonoBehaviour
     public GameObject equestionText;
     public BrickSpawner parent;
 
-    // NEU: Damit kannst du die Position im Inspector verschieben
-    // X = Horizontal, Y = Vertikal
-    // Ein negativer Y-Wert schiebt den Text nach unten.
     public Vector2 screenOffset = new Vector2(0, -10f);
 
     private GameObject equestionObject;

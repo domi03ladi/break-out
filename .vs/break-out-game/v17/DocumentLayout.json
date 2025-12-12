@@ -3,7 +3,7 @@
   "WorkspaceRootPath": "C:\\Users\\domi0\\unity-projects\\break-out-game\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|C:\\Users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\answersmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|c:\\users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\answersmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\answersmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -15,7 +15,7 @@
       "RelativeMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\brickmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|c:\\users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|C:\\Users\\domi0\\unity-projects\\break-out-game\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{27D88300-88A5-771E-3CC6-77B73087BA95}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -58,8 +58,7 @@
               "RelativeToolTip": "Assets\\Scripts\\BrickManager.cs",
               "ViewState": "AgIAACUAAAAAAAAAAAAowDUAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-05T07:54:12.008Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-05T07:54:12.008Z"
             },
             {
               "$type": "Document",
@@ -81,7 +80,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\AnswersManager.cs",
               "ToolTip": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\AnswersManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\AnswersManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAAkwH0AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-05T07:57:54.826Z",
               "EditorCaption": ""
@@ -94,7 +93,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\BrickSpawner.cs",
               "ToolTip": "C:\\Users\\domi0\\unity-projects\\break-out-game\\Assets\\Scripts\\BrickSpawner.cs",
               "RelativeToolTip": "Assets\\Scripts\\BrickSpawner.cs",
-              "ViewState": "AgIAAFYAAAAAAAAAAAAgwAEAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAJQAAAAAAAAAAAAuwKkAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-04T17:28:45.424Z",
               "EditorCaption": ""
@@ -109,8 +108,7 @@
               "RelativeToolTip": "Assets\\Scripts\\BallControll.cs",
               "ViewState": "AgIAAIwAAAAAAAAAAAAAwKcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T23:28:16.753Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T23:28:16.753Z"
             },
             {
               "$type": "Document",
@@ -122,8 +120,7 @@
               "RelativeToolTip": "Assets\\Scripts\\DeathZone.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T22:58:30.427Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T22:58:30.427Z"
             },
             {
               "$type": "Document",
@@ -135,8 +132,7 @@
               "RelativeToolTip": "Assets\\Scripts\\GameManager.cs",
               "ViewState": "AgIAAOAAAAAAAAAAAAAgwOsAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T18:45:03.189Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T18:45:03.189Z"
             },
             {
               "$type": "Document",

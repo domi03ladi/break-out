@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
     public Vector3 startPosition = new Vector3(0f, 1f, 0f);
     [SerializeField] public TextMeshProUGUI scoreText;
     [SerializeField] public TextMeshProUGUI highScoreText;
+    [SerializeField] public GameObject backgroundGreen;
+    [SerializeField] public GameObject backgroundRed;
 
 
 
@@ -305,6 +307,8 @@ public class GameManager : MonoBehaviour
             audioSource.volume = 0.8f;
         }
         audioSource.PlayOneShot(wrongAnswerSound);
+        StartCoroutine(FlashBackground(backgroundRed));
+
     }
 
     private void playRightAnswerSound()
@@ -314,6 +318,17 @@ public class GameManager : MonoBehaviour
             audioSource.volume = 0.8f;
         }
         audioSource.PlayOneShot(rightAnswerSound);
+        StartCoroutine(FlashBackground(backgroundGreen));
+    }
+
+    private IEnumerator FlashBackground(GameObject image,float duration = 0.5f)
+    {
+        if (image != null)
+        {
+            image.SetActive(true);       // Show background
+            yield return new WaitForSeconds(duration); // Wait a short time
+            image.SetActive(false);      // Hide background
+        }
     }
 
     private void UpdateScoreUI()

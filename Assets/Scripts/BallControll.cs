@@ -17,6 +17,13 @@ public class BallControl : MonoBehaviour
     [SerializeField] private Material fireMaterial; // Dein 'Fire_Ball' Material Asset
     [SerializeField] private Material frozenMaterial; // Dein 'Frozen_Ball' Material Asset
 
+    [Header("Squash & Stretch")]
+    [SerializeField] private Transform ballModel;
+    [SerializeField] private float squashReturnSpeed = 2f;
+
+    [Header("Impact Squash Settings")]
+    [SerializeField] private Vector3 impactSquash = new Vector3(1.5f, 0.7f, 1.2f);
+
     private AudioSource audioSource;
 
 
@@ -78,6 +85,8 @@ public class BallControl : MonoBehaviour
     // Füge dies zu BallControl hinzu:
     void OnCollisionEnter(Collision collision)
     {
+        StopAllCoroutines();
+        StartCoroutine(ImpactSquash());
         // Die 'Collision'-Variable enthält Informationen über das getroffene Objekt.
         GameObject hitObject = collision.gameObject;
 
@@ -126,4 +135,19 @@ public class BallControl : MonoBehaviour
 
         m_Rigidbody.AddForce(initialDirection * launchMagnitude, ForceMode.VelocityChange);
     }
+
+    private IEnumerator ImpactSquash()
+    {
+        Vector3 squashed = impactSquash;
+        Vector3 normal = Vector3.one;
+
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime * squashReturnSpeed;
+            ballModel.localScale = Vector3.Lerp(squashed, normal, t);
+            yield return null;
+        }
+    }
 }
+

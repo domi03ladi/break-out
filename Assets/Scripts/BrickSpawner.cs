@@ -39,7 +39,7 @@ public class BrickSpawner : MonoBehaviour
         };
         // Assuming transform.position is the desired bottom-left corner of the grid area.
         highestPoint = new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
-        spawn();
+        Respawn();
 
 
     }

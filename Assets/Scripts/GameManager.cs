@@ -319,9 +319,9 @@ public class GameManager : MonoBehaviour
 
             case GameState.GameOver:
                 gameOverUI.SetActive(true);
-                gameOverUI.GetComponent<GameOverScore>().updateUi(score,PlayerPrefs.GetInt("HighScore", 0));
+                gameOverUI.GetComponent<GameOverScore>().updateUi(score,PlayerPrefs.GetInt("HighScore", 0), brickSpawner.givenAnswers);
                 //gameOverUI.GameOverScore.updateUi(score,PlayerPrefs.GetInt("HighScore", 0).ToString());
-                if(audioSource != null)
+                if (audioSource != null)
                 {
                     audioSource.PlayOneShot(gameOverSound);
                 }

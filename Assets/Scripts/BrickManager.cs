@@ -30,6 +30,9 @@ public class BrickManager : MonoBehaviour
 
     public bool isBeingDestroyedBySystem = false;
 
+    public string mathTask;
+    
+
     void Start()
     {
 
@@ -207,11 +210,11 @@ public class BrickManager : MonoBehaviour
         switch (symbol)
         {
             case EquestionSymbol.addition:
-                return (int)(equestion.x + equestion.y);
+                mathTask = equestion.x + " + " + equestion.y; return (int)(equestion.x + equestion.y);
             case EquestionSymbol.subtraction:
-                return (int)(equestion.x - equestion.y);
+                mathTask = equestion.x + " - " + equestion.y; return (int)(equestion.x - equestion.y);
             case EquestionSymbol.multiplication:
-                return (int)(equestion.x * equestion.y);
+                mathTask = equestion.x + " * " + equestion.y; return (int)(equestion.x * equestion.y);
             default:
                 return -1;
         }

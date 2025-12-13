@@ -19,6 +19,7 @@ public class BrickSpawner : MonoBehaviour
     public float rowGap = 0.1f;
     private List<int> questionBrickIndices = new List<int>();
     public List<GameObject> spawnedAnswers = new List<GameObject>();
+    public List<(string, bool)> givenAnswers = new List<(string, bool)>();
 
     public float[] answerVerticalOffsets = { 0.1f, 0.5f, 1f };
 
@@ -131,9 +132,9 @@ public class BrickSpawner : MonoBehaviour
         {
             for (float y = highestPoint.y; y > maxY; y -= brickHeight + rowGap)
             {
-                //GameObject selectedBrick = GetRandomBrick();
+                GameObject selectedBrick = GetRandomBrick();
                 // For testing only
-                GameObject selectedBrick = brick;
+                //GameObject selectedBrick = brick;
 
                 if (selectedBrick != null)
                 {
@@ -161,6 +162,7 @@ public class BrickSpawner : MonoBehaviour
     public void DespawnBricks()
     {
         questionBrickIndices.Clear();
+        givenAnswers.Clear();
 
         // destroy all objects
         foreach (GameObject ans in spawnedAnswers)
@@ -228,6 +230,7 @@ public class BrickSpawner : MonoBehaviour
     {
         // Spawn answers object on the spawner line without them overlapping and with randomized positions
         float brickWidth = answer.GetComponent<Renderer>().bounds.size.x;
+        spawnedAnswers.Clear();
 
         // 1. Calculate the total number of available slots (object + space)
         float spacing = 5f; // Adjust this value for minimum space between objects
@@ -262,7 +265,9 @@ public class BrickSpawner : MonoBehaviour
         }
 
         // Calculate the equestions value 
-        int equationValue = brick.GetComponent<BrickManager>().CalculateEquestionValue();
+        BrickManager brickManager = brick.GetComponent<BrickManager>();
+        int equationValue = brickManager.CalculateEquestionValue();
+        string mathTask = brickManager.mathTask;
         bool hasAnsweredBeenset = false;
 
         HashSet<int> usedNumbers = new HashSet<int>();
@@ -310,6 +315,7 @@ public class BrickSpawner : MonoBehaviour
                 } while (usedNumbers.Contains(assignedNumber));
             }
             answerObject.GetComponent<AnswersManager>().answer = assignedNumber;
+            answerObject.GetComponent<AnswersManager>().mathTask = mathTask;
             usedNumbers.Add(assignedNumber);
             spawnedAnswers.Add(answerObject);
         }
@@ -386,5 +392,11 @@ public class BrickSpawner : MonoBehaviour
             }
         }
     }
+
+    public void AnswerDestroyed(string answer, bool isCorrect)
+    {
+        givenAnswers.Add((answer, isCorrect));
+    }
+
 
 }

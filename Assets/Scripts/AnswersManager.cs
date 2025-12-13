@@ -14,6 +14,7 @@ public class AnswersManager : MonoBehaviour
 
     private GameObject equestionObject;
     public float relativeTextSize = 0.5f;
+    public string mathTask;
 
     void Awake()
     {
@@ -114,9 +115,11 @@ public class AnswersManager : MonoBehaviour
                 if (isCorrectAnswer)
                 {
                     gameManager.UpdateScore(10);
+                    parent.AnswerDestroyed(mathTask, true);
                 } else
                 {
                     gameManager.playWrongAnswerSound();
+                    parent.AnswerDestroyed(mathTask, false);
                 }
             }
 
@@ -140,6 +143,7 @@ public class AnswersManager : MonoBehaviour
         else if (other.CompareTag("DeathZone"))
         {
             parent.AnswerDestroyed(this.gameObject);
+            GameObject.FindGameObjectWithTag("Paddle").GetComponentInChildren<Animator>().SetTrigger("Close");
         }
     }
 }

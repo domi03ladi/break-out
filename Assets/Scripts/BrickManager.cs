@@ -77,8 +77,15 @@ public class BrickManager : MonoBehaviour
             {
                 explosionEffect.Explode();
             }
-            Destroy(gameObject);
             GameManager.Instance.UpdateScore(1);
+            Animator animator = gameObject.GetComponentInChildren<Animator>();
+            if (animator != null && animator.isActiveAndEnabled)
+            {
+                animator.Play("Destroy", 0, 0f);
+                Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
+                return;
+            }
+            Destroy(gameObject);
             return;
         }
     }

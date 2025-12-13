@@ -83,9 +83,9 @@ public class BrickSpawner : MonoBehaviour
         {
             for (float y = highestPoint.y; y > maxY; y -= brickHeight + rowGap)
             {
-                //GameObject selectedBrick = GetRandomBrick();
+                GameObject selectedBrick = GetRandomBrick();
                 // For testing only
-                GameObject selectedBrick = brick;
+                //GameObject selectedBrick = brick;
 
                 if (selectedBrick != null)
                 {
@@ -98,6 +98,7 @@ public class BrickSpawner : MonoBehaviour
                         {
                             manager.GenerateEquestion();
                             manager.PrepareAndDisplayEquestion();
+                            newBrick.GetComponentInChildren<Animator>().enabled = false;
                         }
                     }
 

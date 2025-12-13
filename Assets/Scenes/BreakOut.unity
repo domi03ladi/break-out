@@ -6359,12 +6359,12 @@ MonoBehaviour:
   height: 2.4
   columnGap: 0.1
   rowGap: 0.1
-  targetEquestionsToSpawn: 5
   spawnedAnswers: []
   answerVerticalOffsets:
   - 0.1
   - 0.4
   - 0.7
+  isRespawning: 0
 --- !u!1 &1271261987
 GameObject:
   m_ObjectHideFlags: 0

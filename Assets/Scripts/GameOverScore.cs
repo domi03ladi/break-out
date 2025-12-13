@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -41,9 +40,9 @@ public class GameOverScore : MonoBehaviour
 
             taskText.text = ans.Item1;
             if (ans.Item2)
-                answerText.text = "O";
+                answerText.text = "right";
             else
-                answerText.text = "X";
+                answerText.text = "wrong";
         }
 
     }

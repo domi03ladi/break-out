@@ -21,7 +21,7 @@ public class AnswersManager : MonoBehaviour
 
     void Start()
     {
-        // WICHTIG: GetComponentInChildren verwenden für importierte Modelle
+        // WICHTIG: GetComponentInChildren verwenden fï¿½r importierte Modelle
         Renderer renderer = GetComponentInChildren<Renderer>();
         if (renderer == null) return;
 
@@ -79,7 +79,7 @@ public class AnswersManager : MonoBehaviour
             Renderer renderer = GetComponentInChildren<Renderer>();
             if (renderer == null) return;
 
-            // Wir nutzen auch hier bounds.center für konsistente Positionierung
+            // Wir nutzen auch hier bounds.center fï¿½r konsistente Positionierung
             Vector3 targetWorldPosition = renderer.bounds.center;
 
             // Project World Point to Screen/Canvas Point
@@ -108,6 +108,7 @@ public class AnswersManager : MonoBehaviour
         if (other.CompareTag("Paddle"))
         {
             GameManager gameManager = FindFirstObjectByType<GameManager>();
+            gameManager.CollectAnwser(answer);
             if (gameManager != null)
             {
                 if (isCorrectAnswer)

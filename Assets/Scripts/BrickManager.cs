@@ -53,6 +53,7 @@ public class BrickManager : MonoBehaviour
         if (equestionObject != null)
         {
             GameObject spawner = GameObject.FindGameObjectWithTag("Spawner");
+            GameManager.Instance.CollectEquestion(equestion,symbol);
             if (spawner != null)
             {
                 spawner.GetComponent<BrickSpawner>().SpawnAnswers(gameObject);
@@ -62,8 +63,8 @@ public class BrickManager : MonoBehaviour
                     paddle.GetComponentInChildren<Animator>().SetTrigger("Open");
             }
 
-            HideEquestion();
         }
+            HideEquestion();
     }
 
     void OnCollisionExit(Collision collision)

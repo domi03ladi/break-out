@@ -4,6 +4,53 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
+using UnityEditor.Search;
+
+public class Equestion
+{
+    private Vector2 equestion;
+    private EquestionSymbol symbol;
+    private float answer;
+    private float correctAnswer;
+
+    public Equestion(Vector2 _equestion, EquestionSymbol _symbol)
+    {
+        equestion = _equestion;
+        symbol = _symbol;
+    }
+    public void SetAnswer(int _answer)
+    {
+        answer = _answer;
+        ValidateAnswer();
+    }
+    public void ValidateAnswer()
+    {
+        switch (symbol)
+        {
+            case EquestionSymbol.addition:
+                correctAnswer = equestion.x + equestion.y;
+                break;
+            case EquestionSymbol.subtraction:
+                correctAnswer = equestion.x - equestion.y;
+                break;
+            case EquestionSymbol.multiplication:
+                correctAnswer = equestion.x * equestion.y;
+                break;
+        }
+
+    }
+    public void Display()
+    {
+        Debug.Log(equestion);
+        Debug.Log(symbol);
+        Debug.Log(answer);
+    }
+
+    
+
+
+}
 
 public enum GameState { Playing, GameOver, MainMenu, SelectLevel, CreateLevel, LeaderBoard}
 
@@ -58,6 +105,8 @@ public class GameManager : MonoBehaviour
 
     private int currentLives = 3;
     private int score = 0;
+    public List<Equestion> collectedEquestions = new List<Equestion>();
+
         
 
     void Awake()
@@ -83,7 +132,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       if(brickSpawner.transform.childCount == 0 && !brickSpawner.isRespawning) 
+        {
+            brickSpawner.Respawn();
+            ResetBall();
+        }  
     }
 
     public void LoseLife()
@@ -131,6 +184,10 @@ public class GameManager : MonoBehaviour
             {
                 paddleTransform.position = new Vector3(0f, paddleTransform.position.y, paddleTransform.position.z);
             }
+            // If there are any other balls destory them
+            foreach (GameObject ball in GameObject.FindGameObjectsWithTag("Ball")) {
+                Destroy(ball);
+            }
 
             // instantiate new ball
             GameObject newBallObject = Instantiate(ballPrefab, startPosition, Quaternion.identity);
@@ -159,6 +216,7 @@ public class GameManager : MonoBehaviour
         // Resets lives to 3 (if you come from the Game Over screen)
         currentLives = 3;
         brickSpawner.DespawnBricks();
+        collectedEquestions.Clear();
         UpdateLivesUI();
 
         // First check whether an old ball exists and destroy it (important when restarting).
@@ -373,7 +431,39 @@ public class GameManager : MonoBehaviour
         }
     }
 
+public void CollectAnwser(int answer)
+{
+    // 1. Check if the list is empty
+    if (collectedEquestions.Count == 0)
+    {
+        Debug.LogWarning("The collectedEquestions list is empty. Cannot process answer.");
+        return; // Exit the method early
+    }
+    
+    int lastIndex = collectedEquestions.Count - 1;
 
+    Equestion latestQuestion = collectedEquestions[lastIndex];
+
+    // 4. Run a method on the latest element, passing the answer
+    // (You will need to define this method in YourBrickClass)
+    latestQuestion.SetAnswer(answer); 
+    
+    }
+    public void CollectEquestion(Vector2 equestion, EquestionSymbol symbol)
+    {
+        collectedEquestions.Add(new Equestion(equestion, symbol));
+    }
+    [ContextMenu("Show Collected")]
+    public void ShowCollected()
+    {
+        foreach (Equestion eq  in collectedEquestions)
+        {
+            eq.Display();
+        }
+
+    }
 }
+
+
 
 

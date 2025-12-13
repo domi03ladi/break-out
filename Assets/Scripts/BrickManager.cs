@@ -77,6 +77,7 @@ public class BrickManager : MonoBehaviour
                 explosionEffect.Explode();
             }
             Destroy(gameObject);
+            GameManager.Instance.UpdateScore(1);
             return;
         }
     }

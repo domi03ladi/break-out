@@ -289,9 +289,12 @@ public class GameManager : MonoBehaviour
 
         }
     }
-    public void UpdateScore(int points = 1)
+    public void UpdateScore(int points )
 	{
-        playRightAnswerSound();
+        if (points == 10)
+        {
+            playRightAnswerSound();
+        }
         score += points;
         // Update the ui;
         UpdateScoreUI();

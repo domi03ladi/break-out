@@ -112,7 +112,7 @@ public class AnswersManager : MonoBehaviour
             {
                 if (isCorrectAnswer)
                 {
-                    gameManager.UpdateScore(1);
+                    gameManager.UpdateScore(10);
                 } else
                 {
                     gameManager.playWrongAnswerSound();

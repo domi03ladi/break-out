@@ -89,6 +89,13 @@ public class GameManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private BrickSpawner brickSpawner;
 
+    [Header("Create Level UI References")]
+    [SerializeField] private Toggle additionToggle;
+    [SerializeField] private Toggle subtractionToggle;
+    [SerializeField] private Toggle multiplicationToggle;
+    [SerializeField] private TMP_InputField minInputValue;
+    [SerializeField] private TMP_InputField maxInputValue;
+
 
 
     [SerializeField] private GameObject ballPrefab;
@@ -232,8 +239,9 @@ public class GameManager : MonoBehaviour
         SetState(GameState.SelectLevel);
     }
 
-    private void SetLevelParameters(int maxRange, List<EquestionSymbol> allowedSymbols)
+    private void SetLevelParameters(int minValue, int maxRange, List<EquestionSymbol> allowedSymbols)
     {
+        BrickManager.CurrentMinValue = minValue;
         BrickManager.CurrentMaxEquestionValue = maxRange;
         BrickManager.AllowedSymbols = allowedSymbols;
 
@@ -246,34 +254,99 @@ public class GameManager : MonoBehaviour
         SetState(GameState.LeaderBoard);
     }
 
+    public void CreateCustomLevelAndStart()
+    {
+        playClickSound();
+
+        List<EquestionSymbol> allowedSymbols = new List<EquestionSymbol>();
+        if (additionToggle.isOn)
+        {
+            allowedSymbols.Add(EquestionSymbol.addition);
+        }
+        if (subtractionToggle.isOn)
+        {
+            allowedSymbols.Add(EquestionSymbol.subtraction);
+        }
+        if (multiplicationToggle.isOn)
+        {
+            allowedSymbols.Add(EquestionSymbol.multiplication);
+        }
+
+        // check if at least 1 option was selected
+        if (allowedSymbols.Count == 0)
+        {
+            Debug.LogWarning("Please select at least one arithmetic operation!");
+            // Optional: Zeigen Sie eine Fehlermeldung auf der UI an.
+            return;
+        }
+
+        int minValue = 1; // default
+        int maxRange = 10; // default
+
+        if (int.TryParse(minInputValue.text, out int minResult))
+        {
+            minValue = minResult;
+        }
+        else
+        {
+            Debug.LogWarning("Invalid value for MIN. Default value 1 used.");
+        }
+
+        if (int.TryParse(maxInputValue.text, out int maxResult))
+        {
+            maxRange = maxResult;
+        }
+        else
+        {
+            Debug.LogWarning("Invalid value for MAX. Default value 10 used.");
+        }
+
+        // min has to be lower than max
+        if (minValue > maxRange)
+        {
+            Debug.LogError("The minimum value must not be greater than the maximum value! Swap values.");
+            int temp = minValue;
+            minValue = maxRange;
+            maxRange = temp;
+        }
+
+        // 3. Level-Parameter setzen und Spiel starten
+        SetLevelParameters(minValue, maxRange, allowedSymbols);
+    }
 
     public void SelectLevel1()
     {
         playClickSound();
-        SetLevelParameters(20, new List<EquestionSymbol> { EquestionSymbol.addition });
+        SetLevelParameters(1, 20, new List<EquestionSymbol> { EquestionSymbol.addition });
     }
 
     public void SelectLevel2()
     {
         playClickSound();
-        SetLevelParameters(20, new List<EquestionSymbol> { EquestionSymbol.subtraction });
+        SetLevelParameters(1, 20, new List<EquestionSymbol> { EquestionSymbol.subtraction });
     }
 
     public void SelectLevel3()
     {
         playClickSound();
-        SetLevelParameters(10, new List<EquestionSymbol> { EquestionSymbol.multiplication });
+        SetLevelParameters(1, 10, new List<EquestionSymbol> { EquestionSymbol.multiplication });
     }
 
 
     public void SelectLevel4()
     {
         playClickSound();
-        SetLevelParameters(100, new List<EquestionSymbol> {
+        SetLevelParameters(1,100, new List<EquestionSymbol> {
         EquestionSymbol.addition,
         EquestionSymbol.subtraction,
         EquestionSymbol.multiplication
     });
+    }
+
+    public void OpenCreateLevel()
+    {
+        playClickSound();
+        SetState(GameState.CreateLevel);
     }
 
     private void playClickSound()

@@ -23,6 +23,7 @@ public class BrickManager : MonoBehaviour
 
     private ExplosionEffect explosionEffect;
 
+    public static int CurrentMinValue = 1;
     public static int CurrentMaxEquestionValue = 10;
     public static List<EquestionSymbol> AllowedSymbols = new List<EquestionSymbol> { EquestionSymbol.addition }; // Standard: Nur Addition
 
@@ -92,7 +93,6 @@ public class BrickManager : MonoBehaviour
     }
     public void GenerateEquestion()
     {
-
         if (AllowedSymbols.Count == 0)
         {
             return;
@@ -105,21 +105,40 @@ public class BrickManager : MonoBehaviour
         int firstValue = 0;
         int secondValue = 0;
 
+        // +1, da Random.Range beim Max-Wert exklusiv ist (10 wird sonst nie gewürfelt)
         int currentMax = CurrentMaxEquestionValue;
+        int currentMin = CurrentMinValue;
+
+        // Sicherheitscheck
+        if (currentMin > currentMax) currentMin = currentMax;
+
+        // Temporäre Variablen zum Würfeln
+        int val1 = 0;
+        int val2 = 0;
 
         switch (symbol)
         {
             case EquestionSymbol.addition:
-                firstValue = UnityEngine.Random.Range(1, currentMax);
-                secondValue = UnityEngine.Random.Range(1, currentMax - firstValue);
+                // Beide Zahlen müssen einfach nur zwischen Min und Max liegen
+                firstValue = UnityEngine.Random.Range(currentMin, currentMax + 1);
+                secondValue = UnityEngine.Random.Range(currentMin, currentMax + 1);
                 break;
+
             case EquestionSymbol.subtraction:
-                firstValue = UnityEngine.Random.Range(1, currentMax);
-                secondValue = UnityEngine.Random.Range(1, firstValue);
+                // Wir würfeln zwei erlaubte Zahlen
+                val1 = UnityEngine.Random.Range(currentMin, currentMax + 1);
+                val2 = UnityEngine.Random.Range(currentMin, currentMax + 1);
+
+                // Damit keine negativen Zahlen rauskommen (z.B. 5 - 10),
+                // setzen wir die größere Zahl immer als firstValue.
+                firstValue = Mathf.Max(val1, val2);
+                secondValue = Mathf.Min(val1, val2);
                 break;
+
             case EquestionSymbol.multiplication:
-                firstValue = UnityEngine.Random.Range(1, (int)Mathf.Sqrt(currentMax));
-                secondValue = UnityEngine.Random.Range(1, (int)Mathf.Sqrt(currentMax));
+                // Auch hier: Beide Zahlen strikt zwischen Min und Max
+                firstValue = UnityEngine.Random.Range(currentMin, currentMax + 1);
+                secondValue = UnityEngine.Random.Range(currentMin, currentMax + 1);
                 break;
         }
 

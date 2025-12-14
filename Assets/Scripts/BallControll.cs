@@ -105,7 +105,7 @@ public class BallControl : MonoBehaviour
             savedVelocity = savedVelocity.normalized * fixedSpeed;
         }
 
-        Debug.Log("Ball beschleunigt! Neue Speed: " + fixedSpeed);
+        Debug.Log("Ball accelerates! New speed: " + fixedSpeed);
     }
 
     void OnCollisionEnter(Collision collision)

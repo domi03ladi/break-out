@@ -4545,7 +4545,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &705507994
 Light:
   m_ObjectHideFlags: 0
@@ -4755,6 +4755,7 @@ MonoBehaviour:
   highScoreText: {fileID: 1883175652}
   backgroundGreen: {fileID: 104436363}
   backgroundRed: {fileID: 1567198529}
+  speedIncreasePer50Points: 1
 --- !u!4 &714230795
 Transform:
   m_ObjectHideFlags: 0
@@ -7487,7 +7488,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1123172884
 Transform:
   m_ObjectHideFlags: 0

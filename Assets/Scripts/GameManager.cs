@@ -293,7 +293,6 @@ public class GameManager : MonoBehaviour
         if (allowedSymbols.Count == 0)
         {
             Debug.LogWarning("Please select at least one arithmetic operation!");
-            // Optional: Zeigen Sie eine Fehlermeldung auf der UI an.
             return;
         }
 
@@ -327,7 +326,6 @@ public class GameManager : MonoBehaviour
             maxRange = temp;
         }
 
-        // 3. Level-Parameter setzen und Spiel starten
         SetLevelParameters(minValue, maxRange, allowedSymbols);
     }
 
@@ -407,7 +405,6 @@ public class GameManager : MonoBehaviour
             case GameState.GameOver:
                 gameOverUI.SetActive(true);
                 gameOverUI.GetComponent<GameOverScore>().updateUi(score, PlayerPrefs.GetInt("HighScore", 0), collectedEquestions);
-                //gameOverUI.GameOverScore.updateUi(score,PlayerPrefs.GetInt("HighScore", 0).ToString());
                 if (audioSource != null)
                 {
                     audioSource.PlayOneShot(gameOverSound);
@@ -461,7 +458,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // NEU: Hilfsmethode, um den Ball zu finden und schneller zu machen
     private void ApplySpeedIncrease()
     {
         GameObject ball = GameObject.FindGameObjectWithTag("Ball");
@@ -470,7 +466,6 @@ public class GameManager : MonoBehaviour
             BallControl ballControl = ball.GetComponent<BallControl>();
             if (ballControl != null)
             {
-                // Hier erhöhen wir um den eingestellten Wert (z.B. 1.0f)
                 ballControl.IncreaseSpeed(speedIncreasePer50Points);
             }
         }
@@ -533,20 +528,20 @@ public class GameManager : MonoBehaviour
     {
         if (musicAudioSource)
         {
-            // 1. Stop the current audio immediately (clears the buffer)
+            // Stop the current audio immediately (clears the buffer)
             musicAudioSource.Stop();
 
-            // 2. Assign the new song to the clip property
+            // Assign the new song to the clip property
             musicAudioSource.clip = song;
 
-            // 3. Play the new song from the beginning
+            // Play the new song from the beginning
             musicAudioSource.Play();
         }
     }
 
     public void CollectAnwser(int answer)
     {
-        // 1. Check if the list is empty
+        // Check if the list is empty
         if (collectedEquestions.Count == 0)
         {
             Debug.LogWarning("The collectedEquestions list is empty. Cannot process answer.");
@@ -557,8 +552,7 @@ public class GameManager : MonoBehaviour
 
         Equestion latestQuestion = collectedEquestions[lastIndex];
 
-        // 4. Run a method on the latest element, passing the answer
-        // (You will need to define this method in YourBrickClass)
+        // Run a method on the latest element, passing the answer
         latestQuestion.SetAnswer(answer);
 
     }

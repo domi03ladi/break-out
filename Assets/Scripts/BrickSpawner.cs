@@ -81,8 +81,6 @@ public class BrickSpawner : MonoBehaviour
             for (float y = highestPoint.y; y > maxY; y -= brickHeight + rowGap)
             {
                 GameObject selectedBrick = GetRandomBrick();
-                // For testing only
-                //GameObject selectedBrick = brick;
 
                 if (selectedBrick != null)
                 {
@@ -138,8 +136,6 @@ public class BrickSpawner : MonoBehaviour
             for (float y = highestPoint.y; y > maxY; y -= brickHeight + rowGap)
             {
                 GameObject selectedBrick = GetRandomBrick();
-                // For testing only
-                //GameObject selectedBrick = brick;
 
                 if (selectedBrick != null)
                 {
@@ -235,7 +231,7 @@ public class BrickSpawner : MonoBehaviour
         float brickWidth = answer.GetComponent<Renderer>().bounds.size.x;
         spawnedAnswers.Clear();
 
-        // 1. Calculate the total number of available slots (object + space)
+        // Calculate the total number of available slots (object + space)
         float spacing = 5f; // Adjust this value for minimum space between objects
         float totalSlotWidth = brickWidth + spacing;
         int maxSlots = Mathf.FloorToInt(width / totalSlotWidth);
@@ -243,7 +239,7 @@ public class BrickSpawner : MonoBehaviour
         // Ensure we don't try to spawn more than the available slots
         int answersToSpawn = Mathf.Min(AnswersAmount, maxSlots);
 
-        // 2. Determine all possible center X-positions for the available slots
+        // Determine all possible center X-positions for the available slots
         List<float> possibleXPositions = new List<float>();
         // The starting x-position for the first object's center
         float startX = transform.position.x + totalSlotWidth / 2;
@@ -254,7 +250,7 @@ public class BrickSpawner : MonoBehaviour
             possibleXPositions.Add(xPosition);
         }
 
-        // 3. Randomize the order of the possible X-positions (Fisher-Yates shuffle is common)
+        // Randomize the order of the possible X-positions (Fisher-Yates shuffle is common)
         // This is a simple randomization that ensures all positions are considered randomly
         System.Random rng = new System.Random();
         int n = possibleXPositions.Count;
@@ -276,7 +272,7 @@ public class BrickSpawner : MonoBehaviour
         HashSet<int> usedNumbers = new HashSet<int>();
         usedNumbers.Add(equationValue);
 
-        // 4. Instantiate the answers using the first 'AnswersAmount' randomized positions
+        // Instantiate the answers using the first 'AnswersAmount' randomized positions
         for (int i = 0; i < answersToSpawn; i++)
         {
             float xPosition = possibleXPositions[i];
@@ -285,12 +281,10 @@ public class BrickSpawner : MonoBehaviour
 
             if (i < answerVerticalOffsets.Length)
             {
-                // Nutze den definierten Offset aus dem Array
                 currentOffset = answerVerticalOffsets[i];
             }
             else
             {
-                // F�llt auf 0 zur�ck, falls mehr als 3 Antworten gespawnt werden (Sicherheitsfall)
                 Debug.LogWarning("More answers to spawn than oPrepareQuestionIndicesffsets defined! Using 0 offset.");
             }
 
@@ -352,26 +346,18 @@ public class BrickSpawner : MonoBehaviour
     {
         questionBrickIndices.Clear();
 
-        // Hinweis: Dein Loop läuft erst Zeile für Zeile (Y) innerhalb einer Spalte (X).
-        // Index-Formel: (Spalte * AnzahlZeilen) + Zeile
-
-        // 1. Linke Obere Ecke (Spalte 0, erste Zeile)
         int topLeft = 0;
         questionBrickIndices.Add(topLeft);
 
-        // 2. Linke Untere Ecke (Spalte 0, letzte Zeile)
         int bottomLeft = rows - 1;
         questionBrickIndices.Add(bottomLeft);
 
-        // 3. Rechte Obere Ecke (Letzte Spalte, erste Zeile)
         int topRight = (cols - 1) * rows;
         questionBrickIndices.Add(topRight);
 
-        // 4. Rechte Untere Ecke (Letzte Spalte, letzte Zeile)
         int bottomRight = (cols - 1) * rows + (rows - 1);
         questionBrickIndices.Add(bottomRight);
 
-        // 5. Mitte (Mittlere Spalte, Mittlere Zeile)
         int midCol = cols / 2;
         int midRow = rows / 2;
         int center = (midCol * rows) + midRow;

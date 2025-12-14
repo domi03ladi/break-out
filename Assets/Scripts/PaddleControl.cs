@@ -22,9 +22,8 @@ public class PaddleControl : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        rb = GetComponent<Rigidbody>(); // Rigidbody holen
+        rb = GetComponent<Rigidbody>();
 
-        // SICHERHEIT: Das Rigidbody muss Kinematisch sein (wird vom Code gesteuert)
         if (rb != null)
         {
             rb.isKinematic = true;

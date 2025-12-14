@@ -20,7 +20,6 @@ public class AnswersManager : MonoBehaviour
 
     void Start()
     {
-        // WICHTIG: GetComponentInChildren verwenden f�r importierte Modelle
         Renderer renderer = GetComponentInChildren<Renderer>();
         if (renderer == null) return;
 
@@ -78,13 +77,11 @@ public class AnswersManager : MonoBehaviour
             Renderer renderer = GetComponentInChildren<Renderer>();
             if (renderer == null) return;
 
-            // Wir nutzen auch hier bounds.center f�r konsistente Positionierung
             Vector3 targetWorldPosition = renderer.bounds.center;
 
             // Project World Point to Screen/Canvas Point
             Vector3 screenPosition = Camera.main.WorldToScreenPoint(targetWorldPosition);
 
-            // NEU: Offset auch im Update anwenden, damit es nicht springt
             screenPosition.x += screenOffset.x;
             screenPosition.y += screenOffset.y;
 

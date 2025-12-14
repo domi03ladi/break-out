@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject backgroundRed;
 
 
-    [SerializeField] private float speedIncreasePer100Points = 20.0f;
+    [SerializeField] private float speedIncreasePer50Points = 1f;
     private int currentLives = 3;
     private int score = 0;
     public List<Equestion> collectedEquestions = new List<Equestion>();
@@ -441,13 +441,13 @@ public class GameManager : MonoBehaviour
             playRightAnswerSound();
         }
 
-        int oldHundreds = score / 200;
+        int old50 = score / 50;
 
         score += points;
 
-        int newHundreds = score / 200;
+        int new50 = score / 50;
 
-        if (newHundreds > oldHundreds)
+        if (new50 > old50)
         {
             ApplySpeedIncrease();
         }
@@ -471,7 +471,7 @@ public class GameManager : MonoBehaviour
             if (ballControl != null)
             {
                 // Hier erhöhen wir um den eingestellten Wert (z.B. 1.0f)
-                ballControl.IncreaseSpeed(speedIncreasePer100Points);
+                ballControl.IncreaseSpeed(speedIncreasePer50Points);
             }
         }
     }

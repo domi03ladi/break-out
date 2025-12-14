@@ -112,7 +112,7 @@ public class AnswersManager : MonoBehaviour
             {
                 if (isCorrectAnswer)
                 {
-                    gameManager.UpdateScore(10);
+                    gameManager.UpdateScore(50);
                     parent.AnswerDestroyed(mathTask, true);
                 } else
                 {

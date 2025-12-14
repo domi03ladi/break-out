@@ -13,9 +13,9 @@ public class BallControl : MonoBehaviour
     [SerializeField] private AudioClip hitWallSound;
 
     [Header("Visual Effects")]
-    [SerializeField] private Renderer ballRenderer; // Der Renderer auf dem Ball-Objekt
-    [SerializeField] private Material fireMaterial; // Dein 'Fire_Ball' Material Asset
-    [SerializeField] private Material frozenMaterial; // Dein 'Frozen_Ball' Material Asset
+    [SerializeField] private Renderer ballRenderer;
+    [SerializeField] private Material fireMaterial;
+    [SerializeField] private Material frozenMaterial;
 
     [Header("Squash & Stretch")]
     [SerializeField] private Transform ballModel;
@@ -48,7 +48,6 @@ public class BallControl : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Wenn kinematisch (eingefroren oder wartend), keine Geschwindigkeit berechnen
         if (m_Rigidbody.isKinematic)
         {
             return;
@@ -56,23 +55,17 @@ public class BallControl : MonoBehaviour
 
         Vector3 currentVelocity = m_Rigidbody.velocity;
 
-        // Nur prüfen, wenn der Ball sich überhaupt bewegt
         if (currentVelocity.sqrMagnitude > 0.01f)
         {
-            // 1. Verhindern, dass der Ball horizontal stecken bleibt
-            // Wir prüfen, ob die Y-Geschwindigkeit (hoch/runter) zu klein ist
+            // Prevent the ball from getting stuck horizontally
             if (Mathf.Abs(currentVelocity.y) < MIN_VERTICAL_SPEED)
             {
-                // Wir bestimmen das Vorzeichen (geht er gerade leicht hoch oder runter?)
-                // Wenn er exakt 0 ist (horizontal), schicken wir ihn nach unten (-1)
                 float sign = (currentVelocity.y == 0) ? -1f : Mathf.Sign(currentVelocity.y);
 
-                // Wir erzwingen die minimale Y-Geschwindigkeit
                 currentVelocity.y = sign * MIN_VERTICAL_SPEED;
             }
 
-            // 2. Konstante Geschwindigkeit erzwingen
-            // Hier nutzen wir den korrigierten Vektor und normalisieren ihn wieder
+            // Enforce constant speed
             m_Rigidbody.velocity = currentVelocity.normalized * fixedSpeed;
         }
     }
@@ -97,6 +90,22 @@ public class BallControl : MonoBehaviour
             isFrozen = true;
             SetBallVisual(frozenMaterial);
         }
+    }
+
+    public void IncreaseSpeed(float speedIncrease)
+    {
+        fixedSpeed += speedIncrease;
+
+        if (!isFrozen && !m_Rigidbody.isKinematic && m_Rigidbody.velocity.sqrMagnitude > 0)
+        {
+            m_Rigidbody.velocity = m_Rigidbody.velocity.normalized * fixedSpeed;
+        }
+        else if (isFrozen)
+        {
+            savedVelocity = savedVelocity.normalized * fixedSpeed;
+        }
+
+        Debug.Log("Ball beschleunigt! Neue Speed: " + fixedSpeed);
     }
 
     void OnCollisionEnter(Collision collision)

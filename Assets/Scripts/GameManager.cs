@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject backgroundRed;
 
 
-
+    [SerializeField] private float speedIncreasePer100Points = 20.0f;
     private int currentLives = 3;
     private int score = 0;
     public List<Equestion> collectedEquestions = new List<Equestion>();
@@ -417,21 +417,47 @@ public class GameManager : MonoBehaviour
 
         }
     }
-    public void UpdateScore(int points )
-	{
-        if (points == 10)
+    public void UpdateScore(int points)
+    {
+        if (points == 50)
         {
             playRightAnswerSound();
         }
+
+        int oldHundreds = score / 200;
+
         score += points;
+
+        int newHundreds = score / 200;
+
+        if (newHundreds > oldHundreds)
+        {
+            ApplySpeedIncrease();
+        }
+
         // Update the ui;
         UpdateScoreUI();
         if (score > PlayerPrefs.GetInt("HighScore", 0))
-		{
+        {
             PlayerPrefs.SetInt("HighScore", score);
             UpdateHighScoreUI();
-		}
-	}
+        }
+    }
+
+    // NEU: Hilfsmethode, um den Ball zu finden und schneller zu machen
+    private void ApplySpeedIncrease()
+    {
+        GameObject ball = GameObject.FindGameObjectWithTag("Ball");
+        if (ball != null)
+        {
+            BallControl ballControl = ball.GetComponent<BallControl>();
+            if (ballControl != null)
+            {
+                // Hier erhöhen wir um den eingestellten Wert (z.B. 1.0f)
+                ballControl.IncreaseSpeed(speedIncreasePer100Points);
+            }
+        }
+    }
 
     public void playWrongAnswerSound()
     {

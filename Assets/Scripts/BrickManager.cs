@@ -15,6 +15,7 @@ public class BrickManager : MonoBehaviour
     private Vector2 equestion;
     private EquestionSymbol symbol;
     public GameObject equestionText;
+    public GameObject heartPrefab;
 
     private GameObject equestionObject;
     public float relativeTextSize = 0.5f;
@@ -30,7 +31,9 @@ public class BrickManager : MonoBehaviour
     public bool isBeingDestroyedBySystem = false;
 
     public string mathTask;
-    
+
+    private bool hasHeart = false;
+
 
     void Start()
     {
@@ -51,11 +54,14 @@ public class BrickManager : MonoBehaviour
             HideEquestion();
             return;
         }
-
-        if (equestionObject != null)
+        if(hasHeart)
+        {
+            GameManager.Instance.RecoverHeart();
+        }
+        if (equestionObject != null && !hasHeart)
         {
             GameObject spawner = GameObject.FindGameObjectWithTag("Spawner");
-            GameManager.Instance.CollectEquestion(equestion,symbol);
+            GameManager.Instance.CollectEquestion(equestion, symbol);
             if (spawner != null)
             {
                 spawner.GetComponent<BrickSpawner>().SpawnAnswers(gameObject);
@@ -66,7 +72,7 @@ public class BrickManager : MonoBehaviour
             }
 
         }
-            HideEquestion();
+        HideEquestion();
     }
 
     void OnCollisionExit(Collision collision)
@@ -144,57 +150,8 @@ public class BrickManager : MonoBehaviour
 
         equestion = new Vector2(firstValue, secondValue);
     }
-
     public void PrepareAndDisplayEquestion()
     {
-        Renderer renderer = GetComponent<Renderer>();
-        if (renderer == null) return;
-
-        // Find the Canvas Transform
-        GameObject[] canvases = GameObject.FindGameObjectsWithTag("UICanvas");
-        if (canvases.Length == 0) return;
-        Transform uiCanvasTransform = canvases[0].transform;
-
-        // Instantiate the text prefab as a child of the Canvas
-        equestionObject = Instantiate(equestionText, uiCanvasTransform);
-        TextMeshProUGUI tmpComponent = equestionObject.GetComponent<TextMeshProUGUI>();
-
-        if (tmpComponent == null)
-        {
-            // Fallback for complex prefab structure
-            tmpComponent = equestionObject.GetComponentInChildren<TextMeshProUGUI>(true);
-            if (tmpComponent == null)
-            {
-                Destroy(equestionObject);
-                return;
-            }
-        }
-
-        // Calculate World Position of the brick's front face (-Z)
-        Vector3 size = renderer.bounds.size;
-        Vector3 brickFrontWorldPosition = transform.position;
-        brickFrontWorldPosition.z -= (size.z / 2f);
-
-        // Project World Point to Screen/Canvas Point
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(brickFrontWorldPosition);
-
-        // Check if brick is in front of the camera
-        if (screenPosition.z < 0)
-        {
-            Destroy(equestionObject);
-            return;
-        }
-        // Dynamic Sizing (based on screen space projection of the brick height)
-        float worldHeightInPixels = Camera.main.WorldToScreenPoint(transform.position + Vector3.up * size.y).y - screenPosition.y;
-        float dynamicFontSize = worldHeightInPixels * relativeTextSize;
-
-        // Set UI Text Position
-        equestionObject.GetComponent<RectTransform>().position = screenPosition;
-
-        tmpComponent.fontSize = dynamicFontSize;
-        tmpComponent.rectTransform.sizeDelta = new Vector2(worldHeightInPixels * 2.5f, worldHeightInPixels);
-
-        // Set Content
         string sign = "";
         switch (symbol)
         {
@@ -204,10 +161,64 @@ public class BrickManager : MonoBehaviour
         }
 
         string equationString = $"{equestion.x} {sign} {equestion.y}";
-        tmpComponent.text = equationString;
 
-        equestionObject.SetActive(true);
+        // Call the generalized function
+        equestionObject = PrepareAndDisplayText(equestionText, equationString, relativeTextSize);
     }
+    public GameObject PrepareAndDisplayText(GameObject textPrefab, string content, float relativeSizeMultiplier)
+    {
+        Renderer renderer = GetComponent<Renderer>();
+        if (renderer == null) return null;
+
+        GameObject[] canvases = GameObject.FindGameObjectsWithTag("UICanvas");
+        if (canvases.Length == 0) return null;
+        Transform uiCanvasTransform = canvases[0].transform;
+
+        GameObject textObject = Instantiate(textPrefab, uiCanvasTransform);
+        TextMeshProUGUI tmpComponent = textObject.GetComponent<TextMeshProUGUI>();
+
+        if (tmpComponent == null)
+        {
+            tmpComponent = textObject.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (tmpComponent == null)
+            {
+                Destroy(textObject);
+                return null;
+            }
+        }
+
+        Vector3 size = renderer.bounds.size;
+
+        // Calculate the position of the brick's local Z-face in World Space
+        Vector3 brickSurfaceWorldPosition = transform.position + transform.forward * (size.z / 2f);
+
+        // Add a slight offset in World Space to pull the text off the surface.
+        float offset = 0.01f;
+        Vector3 textWorldPosition = brickSurfaceWorldPosition + transform.forward * offset;
+
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(textWorldPosition);
+
+        if (screenPosition.z < 0)
+        {
+            Destroy(textObject);
+            return null;
+        }
+
+        float worldHeightInPixels = Camera.main.WorldToScreenPoint(transform.position + Vector3.up * size.y).y - screenPosition.y;
+        float dynamicFontSize = worldHeightInPixels * relativeSizeMultiplier;
+
+        textObject.GetComponent<RectTransform>().position = screenPosition;
+
+        tmpComponent.fontSize = dynamicFontSize;
+        tmpComponent.rectTransform.sizeDelta = new Vector2(worldHeightInPixels * 2.5f, worldHeightInPixels);
+
+        tmpComponent.text = content;
+
+        textObject.SetActive(true);
+
+        return textObject;
+    }
+
 
     public void HideEquestion()
     {
@@ -219,11 +230,11 @@ public class BrickManager : MonoBehaviour
     }
 
     public int CalculateEquestionValue()
-	{
-		if (equestionObject == null)
-		{
+    {
+        if (equestionObject == null)
+        {
             return -1; // No equation associated
-		}
+        }
         switch (symbol)
         {
             case EquestionSymbol.addition:
@@ -235,6 +246,15 @@ public class BrickManager : MonoBehaviour
             default:
                 return -1;
         }
-	}
+    }
+    public void GiveHeart()
+    {
+        // We cannot have both healing and numbers
+        if (equestionObject == null)
+        {
+            hasHeart = true;
+            equestionObject = PrepareAndDisplayText(heartPrefab, "♥", 0.8f);
+        }
+    }
 
 }

@@ -10,7 +10,7 @@ public class GameOverScore : MonoBehaviour
     public GameObject answerPrefab;
 
 
-    public void updateUi(int scoreValue, int highScoreValue, List<(string, bool)> givenAnswers)
+    public void updateUi(int scoreValue, int highScoreValue, List<Equestion> givenAnswers)
     {
         if (score != null)
         {
@@ -24,25 +24,32 @@ public class GameOverScore : MonoBehaviour
 
     }
 
-    public void Populate(List<(string, bool)> answers)
+    public void Populate(List<Equestion> answers)
     {
         foreach (Transform child in scrollContent)
         {
             Destroy(child.gameObject);
         }
 
-        foreach ((string, bool) ans in answers)
+        foreach (Equestion ans in answers)
         {
             GameObject newAnswer = Instantiate(answerPrefab, scrollContent);
             TMP_Text taskText = newAnswer.transform.Find("Task").GetComponent<TMP_Text>();
             TMP_Text answerText = newAnswer.transform.Find("Answer").GetComponent<TMP_Text>();
 
 
-            taskText.text = ans.Item1;
-            if (ans.Item2)
-                answerText.text = "right";
+            taskText.text =ans.StringifyEquestion();
+            if (ans.correctAnswer == ans.answer)
+            {
+                answerText.color = Color.green;
+                answerText.text = ans.correctAnswer.ToString();
+            }
             else
-                answerText.text = "wrong";
+            {
+
+                answerText.color = Color.red;
+                answerText.text = ans.answer.ToString() + " (" + ans.correctAnswer.ToString() + ")";
+            }
         }
 
     }

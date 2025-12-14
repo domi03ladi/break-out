@@ -136,7 +136,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equestionText: {fileID: 5901254446852976296, guid: cea44f3e1a9f8a8489631b945502e521, type: 3}
+  heartPrefab: {fileID: 5901254446852976296, guid: fb61342a1adbb24679ba4848352d16de, type: 3}
   relativeTextSize: 0.55
+  isBeingDestroyedBySystem: 0
+  mathTask: 
 --- !u!82 &-2852122977741899445
 AudioSource:
   m_ObjectHideFlags: 0

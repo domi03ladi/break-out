@@ -8,8 +8,8 @@ public class Equestion
 {
     private Vector2 equestion;
     private EquestionSymbol symbol;
-    private float answer;
-    private float correctAnswer;
+    public float answer;
+    public float correctAnswer;
 
     public Equestion(Vector2 _equestion, EquestionSymbol _symbol)
     {
@@ -35,7 +35,23 @@ public class Equestion
                 correctAnswer = equestion.x * equestion.y;
                 break;
         }
-
+    }
+    public string StringifyEquestion()
+    {
+        string s = "";
+        switch (symbol)
+        {
+            case EquestionSymbol.addition:
+                s = "+";
+                break;
+            case EquestionSymbol.subtraction:
+                s = "-";
+                break;
+            case EquestionSymbol.multiplication:
+                s = "*";
+                break;
+        }
+        return equestion.x.ToString() + " " + s + " " + equestion.y.ToString();
     }
     public void Display()
     {
@@ -44,12 +60,12 @@ public class Equestion
         Debug.Log(answer);
     }
 
-    
+
 
 
 }
 
-public enum GameState { Playing, GameOver, MainMenu, SelectLevel, CreateLevel, LeaderBoard}
+public enum GameState { Playing, GameOver, MainMenu, SelectLevel, CreateLevel, LeaderBoard }
 
 public class GameManager : MonoBehaviour
 {
@@ -60,7 +76,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Game State Containers")]
     [SerializeField] private GameObject playingContainer;
-    [SerializeField] private GameObject livesUI;             
+    [SerializeField] private GameObject livesUI;
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject mainMenuUi;
     [SerializeField] private GameObject selectLevelUi;
@@ -111,12 +127,12 @@ public class GameManager : MonoBehaviour
     private int score = 0;
     public List<Equestion> collectedEquestions = new List<Equestion>();
 
-        
+
 
     void Awake()
     {
         // Singleton-Pattern
-        if (Instance == null)   
+        if (Instance == null)
             Instance = this;
         else
             Destroy(gameObject);
@@ -130,17 +146,17 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-       if(brickSpawner.transform.childCount == 0 && !brickSpawner.isRespawning) 
+        if (brickSpawner.transform.childCount == 0 && !brickSpawner.isRespawning)
         {
             brickSpawner.Respawn();
             ResetBall();
-        }  
+        }
     }
 
     public void LoseLife()
@@ -173,7 +189,7 @@ public class GameManager : MonoBehaviour
     {
         if (lifeImages == null || lifeImages.Length == 0) return;
 
-        for (int i = 0; i < lifeImages.Length; i++) 
+        for (int i = 0; i < lifeImages.Length; i++)
         {
             lifeImages[i].gameObject.SetActive(i < currentLives);
         }
@@ -189,7 +205,8 @@ public class GameManager : MonoBehaviour
                 paddleTransform.position = new Vector3(0f, paddleTransform.position.y, paddleTransform.position.z);
             }
             // If there are any other balls destory them
-            foreach (GameObject ball in GameObject.FindGameObjectsWithTag("Ball")) {
+            foreach (GameObject ball in GameObject.FindGameObjectsWithTag("Ball"))
+            {
                 Destroy(ball);
             }
 
@@ -336,7 +353,7 @@ public class GameManager : MonoBehaviour
     public void SelectLevel4()
     {
         playClickSound();
-        SetLevelParameters(1,100, new List<EquestionSymbol> {
+        SetLevelParameters(1, 100, new List<EquestionSymbol> {
         EquestionSymbol.addition,
         EquestionSymbol.subtraction,
         EquestionSymbol.multiplication
@@ -389,7 +406,7 @@ public class GameManager : MonoBehaviour
 
             case GameState.GameOver:
                 gameOverUI.SetActive(true);
-                gameOverUI.GetComponent<GameOverScore>().updateUi(score,PlayerPrefs.GetInt("HighScore", 0), brickSpawner.givenAnswers);
+                gameOverUI.GetComponent<GameOverScore>().updateUi(score, PlayerPrefs.GetInt("HighScore", 0), collectedEquestions);
                 //gameOverUI.GameOverScore.updateUi(score,PlayerPrefs.GetInt("HighScore", 0).ToString());
                 if (audioSource != null)
                 {
@@ -480,7 +497,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(FlashBackground(backgroundGreen));
     }
 
-    private IEnumerator FlashBackground(GameObject image,float duration = 0.5f)
+    private IEnumerator FlashBackground(GameObject image, float duration = 0.5f)
     {
         if (image != null)
         {
@@ -491,21 +508,21 @@ public class GameManager : MonoBehaviour
     }
 
     private void UpdateScoreUI()
-	{
-		// Find the score TextMeshProUGUI by tag Score and update its text
+    {
+        // Find the score TextMeshProUGUI by tag Score and update its text
         if (scoreText != null)
         {
             scoreText.text = "Score: " + score.ToString();
         }
 
-	}
+    }
     private void UpdateHighScoreUI()
-	{
+    {
         if (highScoreText != null)
         {
             highScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore", 0).ToString();
         }
-	}
+    }
 
     public void OpenMainMenu()
     {
@@ -517,7 +534,7 @@ public class GameManager : MonoBehaviour
         if (musicAudioSource)
         {
             // 1. Stop the current audio immediately (clears the buffer)
-            musicAudioSource.Stop(); 
+            musicAudioSource.Stop();
 
             // 2. Assign the new song to the clip property
             musicAudioSource.clip = song;
@@ -527,23 +544,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
-public void CollectAnwser(int answer)
-{
-    // 1. Check if the list is empty
-    if (collectedEquestions.Count == 0)
+    public void CollectAnwser(int answer)
     {
-        Debug.LogWarning("The collectedEquestions list is empty. Cannot process answer.");
-        return; // Exit the method early
-    }
-    
-    int lastIndex = collectedEquestions.Count - 1;
+        // 1. Check if the list is empty
+        if (collectedEquestions.Count == 0)
+        {
+            Debug.LogWarning("The collectedEquestions list is empty. Cannot process answer.");
+            return; // Exit the method early
+        }
 
-    Equestion latestQuestion = collectedEquestions[lastIndex];
+        int lastIndex = collectedEquestions.Count - 1;
 
-    // 4. Run a method on the latest element, passing the answer
-    // (You will need to define this method in YourBrickClass)
-    latestQuestion.SetAnswer(answer); 
-    
+        Equestion latestQuestion = collectedEquestions[lastIndex];
+
+        // 4. Run a method on the latest element, passing the answer
+        // (You will need to define this method in YourBrickClass)
+        latestQuestion.SetAnswer(answer);
+
     }
     public void CollectEquestion(Vector2 equestion, EquestionSymbol symbol)
     {
@@ -552,11 +569,22 @@ public void CollectAnwser(int answer)
     [ContextMenu("Show Collected")]
     public void ShowCollected()
     {
-        foreach (Equestion eq  in collectedEquestions)
+        foreach (Equestion eq in collectedEquestions)
         {
             eq.Display();
         }
 
+    }
+    public void RecoverHeart()
+    {
+        if(currentLives < 3)
+        {
+            playRightAnswerSound();
+            currentLives++;
+            UpdateLivesUI();
+
+        }
+        
     }
 }
 

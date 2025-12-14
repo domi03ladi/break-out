@@ -16,7 +16,6 @@ public class BrickSpawner : MonoBehaviour
     public float rowGap = 0.1f;
     private List<int> questionBrickIndices = new List<int>();
     public List<GameObject> spawnedAnswers = new List<GameObject>();
-    public List<(string, bool)> givenAnswers = new List<(string, bool)>();
 
     public float[] answerVerticalOffsets = { 0.1f, 0.5f, 1f };
 
@@ -89,16 +88,25 @@ public class BrickSpawner : MonoBehaviour
                 {
                     GameObject newBrick = Instantiate(selectedBrick, new Vector3(x + brickWidth / 2, y - brickHeight / 2, transform.position.z), transform.rotation, transform);
 
+                    BrickManager manager = newBrick.GetComponent<BrickManager>();
                     if (questionBrickIndices.Contains(currentBrickIndex))
                     {
-                        BrickManager manager = newBrick.GetComponent<BrickManager>();
                         if (manager != null)
                         {
                             manager.GenerateEquestion();
                             manager.PrepareAndDisplayEquestion();
                             newBrick.GetComponentInChildren<Animator>().enabled = false;
                         }
+                    }else
+                    {
+                        var r = Random.Range(0.0f, 1.0f);
+                        if(r < 0.05f && manager != null)
+                        {
+                            manager.GiveHeart();
+                        }
+
                     }
+
 
                     currentBrickIndex++;
                 }
@@ -137,16 +145,15 @@ public class BrickSpawner : MonoBehaviour
                 {
                     GameObject newBrick = Instantiate(selectedBrick, new Vector3(x + brickWidth / 2, y - brickHeight / 2, transform.position.z), transform.rotation, transform);
 
+                        BrickManager manager = newBrick.GetComponent<BrickManager>();
                     if (questionBrickIndices.Contains(currentBrickIndex))
                     {
-                        BrickManager manager = newBrick.GetComponent<BrickManager>();
                         if (manager != null)
                         {
                             manager.GenerateEquestion();
                             manager.PrepareAndDisplayEquestion();
                         }
                     }
-
                     currentBrickIndex++;
                 }
             }
@@ -159,7 +166,6 @@ public class BrickSpawner : MonoBehaviour
     public void DespawnBricks()
     {
         questionBrickIndices.Clear();
-        givenAnswers.Clear();
 
         // destroy all objects
         foreach (GameObject ans in spawnedAnswers)
@@ -192,7 +198,7 @@ public class BrickSpawner : MonoBehaviour
     void Reset()
     {
         DespawnBricks();
-        Spawn();
+        isRespawning = true;
     }
 
     public void Respawn()
@@ -390,10 +396,6 @@ public class BrickSpawner : MonoBehaviour
         }
     }
 
-    public void AnswerDestroyed(string answer, bool isCorrect)
-    {
-        givenAnswers.Add((answer, isCorrect));
-    }
 
 
 }

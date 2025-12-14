@@ -113,11 +113,9 @@ public class AnswersManager : MonoBehaviour
                 if (isCorrectAnswer)
                 {
                     gameManager.UpdateScore(50);
-                    parent.AnswerDestroyed(mathTask, true);
                 } else
                 {
                     gameManager.playWrongAnswerSound();
-                    parent.AnswerDestroyed(mathTask, false);
                 }
             }
 
